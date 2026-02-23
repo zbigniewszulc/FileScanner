@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileScanner.Models
 {
-    internal class FileResult
+    public class FileResult
     {
         public string FilePath { get; set; } = string.Empty;
         public DateTime LastModified { get; set; }
