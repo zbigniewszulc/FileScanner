@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileScanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Icon="Assets/Icons/folder-scanner.ico"
+        Title="File Scanner" 
+        Height="450" 
+        Width="800">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Folder -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Folder:" Width="60" />
+            <TextBox x:Name="FolderTextBox" Width="400" />
+        </StackPanel>
+        
+        <!-- Date + radio -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Date:" Width="60" />
+            <DatePicker x:Name="DatePickerControl" Width="150" />
 
+            <RadioButton x:Name="BeforeRadio"
+                         Content="Before"
+                         Margin="20,0,0,0"
+                         IsChecked="True" />
+
+            <RadioButton x:Name="AfterRadio"
+                         Content="After"
+                         Margin="10,0,0,0" />
+        </StackPanel>
+        
+        <!-- Start button -->
+        <Button Grid.Row="2"
+                Content="Start Scan"
+                Width="120"
+                Click="StartButton_Click" Margin="0,0,0,8" />
+        
+        <!-- Results -->
+        <DataGrid Grid.Row="3"
+                  x:Name="ResultsDataGrid"
+                  AutoGenerateColumns="False" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File Path"
+                                    Binding="{Binding FilePath}"
+                                    Width="*" />
+                <DataGridTextColumn Header="Last Modified"
+                                    Binding="{Binding LastModified, StringFormat=dd/MM/yyyy HH:mm:ss}"
+                                    Width="200" />
+                <DataGridTextColumn Header="Owner"
+                                    Binding="{Binding Owner}"
+                                    Width="200" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
