@@ -15,6 +15,7 @@
             <RowDefinition Height="Auto" />  <!-- Folder row-->
             <RowDefinition Height="Auto" />  <!-- Date + radio row-->
             <RowDefinition Height="Auto" />  <!-- Start/Export Buttons row-->
+            <RowDefinition Height="Auto" />  <!-- Progress status -->
             <RowDefinition Height="*" />     <!-- Results -->
         </Grid.RowDefinitions>
         
@@ -127,9 +128,10 @@
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
-                    Margin="0,10,0,10">
+                    Margin="0,5,0,5">
 
-            <Button Content="Start Scan"
+            <Button x:Name="StartScanButton"
+                    Content="Start Scan"
                     Click="StartButton_Click"
                     Margin="5"
                     Width="120"
@@ -146,10 +148,17 @@
                     Visibility="Collapsed" />
         </StackPanel>
 
+        <ProgressBar x:Name="ScanProgressBar"
+                     Grid.Row="3"
+                     Height="6"
+                     Margin="0,8,0,0"
+                     IsIndeterminate="True"
+                     Visibility="Collapsed" />
+
         <!-- ======= -->     
         <!-- Results -->
         <!-- ======= -->
-        <DataGrid Grid.Row="3"
+        <DataGrid Grid.Row="4"
                   x:Name="ResultsDataGrid"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -167,5 +176,7 @@
                                     Width="200" />
             </DataGrid.Columns>
         </DataGrid>
+    
+
     </Grid>
 </Window>

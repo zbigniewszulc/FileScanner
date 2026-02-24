@@ -65,7 +65,8 @@ namespace FileScanner
                 return;
             } 
 
-            // No point scanning if the folder dosn't exist. It might happen that folder was removed by other user after added via Browse button 
+            // No point scanning if the folder dosn't exist.
+            // It might happen that folder was removed by other user after added via Browse button 
             if (!Directory.Exists(folderPath))
             {
                 ShowWarning("Folder does not exist.");
@@ -91,13 +92,18 @@ namespace FileScanner
             //Check if use selected system proteced files
             bool includeSystemFiles = IncludeSystemFilesCheckBox.IsChecked == true;
 
-            try 
+            try
             {
                 // Create the scanning service (all file logic lives there)
                 var service = new FileScannerService();
 
                 // Clear old results before running the scan
                 ResultsDataGrid.ItemsSource = null;
+
+                // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
+                StartScanButton.IsEnabled = false;
+                ExportButton.Visibility = Visibility.Collapsed;
+                ScanProgressBar.Visibility = Visibility.Visible;
 
                 // Run the scan in background to prevent the UI from freeze
                 var result = await service.ScanAsync(
@@ -116,6 +122,11 @@ namespace FileScanner
                 // Count how many matching files we found 
                 int fileCount = result.Results.Count;
 
+                // Unlock UI (i.e. Enable Start Scan button).
+                // Additionally disable progress bar as the scanning process finalised at this stage
+                StartScanButton.IsEnabled = true;
+                ScanProgressBar.Visibility = Visibility.Collapsed;
+
                 // Show summary popup
                 MessageBox.Show(
                     $"Scan completed successfully!\n\n" +
@@ -130,7 +141,7 @@ namespace FileScanner
                 ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
             }
             // Catch and display error if any 
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ShowError($"Scan failed: {ex.Message}");
             }
