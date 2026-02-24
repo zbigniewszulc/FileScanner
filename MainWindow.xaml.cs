@@ -131,7 +131,8 @@ namespace FileScanner
                 MessageBox.Show(
                     $"Scan completed successfully!\n\n" +
                     $"Total files found: {fileCount}\n" +
-                    $"Execution time: {result.Duration.TotalSeconds:F2} sec",
+                    $"Execution time: {result.Duration.TotalSeconds:F2} sec\n" + "" +
+                    $"                          ( {result.Duration.TotalMilliseconds:F0} ms )",
                     "Scan Results",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
