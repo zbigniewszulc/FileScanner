@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using FileScanner.Models;
 using FileScanner.Services;
 using Microsoft.Win32;
+using System.Threading;
 
 
 namespace FileScanner
@@ -22,6 +23,9 @@ namespace FileScanner
     public partial class MainWindow : Window
     {
         private ScanResult? _lastScanResult;
+
+        // This field is required to singal cancellation of ongoing folders/files scan
+        private CancellationTokenSource _cancellationTokenSource;
 
         // This variable is needed to make sure that Main Windows definitely was Initialised
         private bool _isLoaded;
@@ -94,6 +98,9 @@ namespace FileScanner
 
             try
             {
+                // Intialise cancellation - create cancellation source for this scan session
+                _cancellationTokenSource = new CancellationTokenSource();
+
                 // Create the scanning service (all file logic lives there)
                 var service = new FileScannerService();
 
@@ -107,12 +114,15 @@ namespace FileScanner
                 ScanProgressBar.Visibility = Visibility.Visible;
 
                 // Run the scan in background to prevent the UI from freeze
+                // Among multiple passed arguments, also pas cancellation token to the service 
+                // ..so user can easly and safely stop the scanning process
                 var result = await service.ScanAsync(
                     folderPath,
                     selectedDate,
                     beforeDate,
                     includeHiddenFiles,
-                    includeSystemFiles
+                    includeSystemFiles, 
+                    _cancellationTokenSource.Token
                 );
 
                 _lastScanResult = result;
@@ -143,10 +153,22 @@ namespace FileScanner
                 // Show export button only if we have results
                 ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
             }
+
+            // OperationCanceledException is thrown when user cancels the scanning process
+            catch (OperationCanceledException)
+            {
+                ShowWarning("Scan was cancelled by user.");
+            }
+
             // Catch and display error if any 
             catch (Exception ex)
             {
                 ShowError($"Scan failed: {ex.Message}");
+            }
+            // Clean cancellation source reference
+            finally 
+            {
+                _cancellationTokenSource = null;
             }
         }
 
@@ -233,6 +255,12 @@ namespace FileScanner
             _lastScanResult = null;
             ResultsDataGrid.ItemsSource = null;
             ExportButton.Visibility = Visibility.Hidden;
+        }
+
+        // Send cancelation signal to the runnng scanning process 
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            _cancellationTokenSource.Cancel();
         }
     }
 }

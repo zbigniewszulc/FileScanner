@@ -8,20 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace FileScanner.Services
 {
     public class FileScannerService
     {
         // Main method resposible for scanning the selected folder
+        // Passing cancellation token which allows the scan to be stopped safely
         public async Task<ScanResult> ScanAsync
         (
             string folderPath,
             DateTime targetDate,
             bool beforeDate,
             bool includeHiddenFiles,
-            bool includeSystemFiles
+            bool includeSystemFiles, 
+            CancellationToken cancellationToken
         )
         {
             // We measure execution time to show later in the summary popup
@@ -40,6 +42,9 @@ namespace FileScanner.Services
                     {
                         try
                         {
+                            // Check whether cancellation was requested and stop immediately if so
+                            cancellationToken.ThrowIfCancellationRequested();
+
                             // We using FileInfo to access attributes and metadata
                             var fileInfo = new FileInfo(filePath);
 
