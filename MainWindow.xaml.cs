@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FileScanner.Services;
+using Microsoft.Win32;
 
 
 namespace FileScanner
@@ -31,7 +32,15 @@ namespace FileScanner
             // Read folder path from the textbox
             string folderPath = FolderTextBox.Text;
 
-            // No point scanning if the folder dosn't exist
+
+            // If no folder has been selected
+            if (string.IsNullOrWhiteSpace(folderPath)) 
+            {
+                MessageBox.Show("Please select a folder first.");
+                return;
+            } 
+
+            // No point scanning if the folder dosn't exist. It might happen that folder was removed by other user after added via Browse button 
             if (!Directory.Exists(folderPath))
             {
                 MessageBox.Show("Folder does not exist.");
@@ -51,6 +60,12 @@ namespace FileScanner
             // Determine if we're looking for files before or after the selected date
             bool beforeDate = BeforeRadio.IsChecked == true;
 
+            // Check if user selected hidden files
+            bool includeHiddenFiles = IncludeHiddenFilesCheckBox.IsChecked == true;
+
+            //Check if use selected system proteced files
+            bool includeSystemFiles = IncludeSystemFilesCheckBox.IsChecked == true;
+
             // Create the scanning service (all file logic lives there)
             var service = new FileScannerService();
 
@@ -61,7 +76,9 @@ namespace FileScanner
             var result = await service.ScanAsync(
                 folderPath,
                 selectedDate,
-                beforeDate
+                beforeDate,
+                includeHiddenFiles,
+                includeSystemFiles
             );
 
             // Show the results in the grid
@@ -80,6 +97,17 @@ namespace FileScanner
                 MessageBoxImage.Information
             );
 
+        }
+
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFolderDialog();
+
+            if (dialog.ShowDialog() == true)
+            { 
+                FolderTextBox.Text = dialog.FolderName;
+                FolderTextBox.ToolTip = dialog.FolderName;
+            }
         }
     }
 }

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Icon="Assets/Icons/folder-scanner.ico"
         Title="File Scanner" 
-        Height="450" 
-        Width="800">
-    
+        Height="470" 
+        Width="850">
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,34 +17,109 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <!-- Folder -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Folder:" Width="60" />
-            <TextBox x:Name="FolderTextBox" Width="400" />
-        </StackPanel>
-        
+
+        <!-- Folder row -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="450" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Folder:"
+                   Grid.Column="0"
+                   Width="55"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0" />
+
+            <TextBox x:Name="FolderTextBox"
+                     Grid.Column="1"
+                     VerticalAlignment="Center"
+                     IsReadOnly="True"
+                     Margin="0,0,10,0" 
+                     Background="#FFF1F1F1" />
+
+            <Button Content="Browse..."
+                    Grid.Column="2"
+                    Width="100"
+                    Click="BrowseButton_Click"
+                    Margin="0,0,20,0" />
+
+            <CheckBox x:Name="IncludeHiddenFilesCheckBox"
+                      Grid.Column="3"
+                      Content="Hidden"
+                      VerticalAlignment="Center"
+                      Margin="0,0,15,0">
+                      
+                <CheckBox.ToolTip>
+                    <TextBlock>
+                        Tick this box to include hidden files.
+                        <LineBreak />
+                        Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
+                        <LineBreak />
+                        Select all applicable options to include them.
+                    </TextBlock>
+                </CheckBox.ToolTip>
+            </CheckBox>
+
+            <CheckBox x:Name="IncludeSystemFilesCheckBox"
+                      Grid.Column="4"
+                      Content="System"                
+                      VerticalAlignment="Center">
+
+                <CheckBox.ToolTip>
+                    <TextBlock>
+                            Tick this box to include protected system files.
+                            <LineBreak />
+                            Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
+                            <LineBreak />
+                            Select all applicable options to include them.
+                    </TextBlock>
+                </CheckBox.ToolTip>
+            </CheckBox>
+        </Grid>
+
         <!-- Date + radio -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Date:" Width="60" />
-            <DatePicker x:Name="DatePickerControl" Width="150" />
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    VerticalAlignment="Center"
+                    Margin="0,10,0,10">
+
+            <Label Content="Date"
+                   Width="55"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0" />
+
+            <DatePicker x:Name="DatePickerControl" 
+                        Width="150"
+                        Margin="0,0,15,0" VerticalAlignment="Center"/>
 
             <RadioButton x:Name="BeforeRadio"
                          Content="Before"
-                         Margin="20,0,0,0"
-                         IsChecked="True" />
+                         ToolTip="Show files modified before the selected date"
+                         IsChecked="True"
+                         VerticalAlignment="Center"
+                         Margin="0,0,10,0" />
 
             <RadioButton x:Name="AfterRadio"
                          Content="After"
-                         Margin="10,0,0,0" />
+                         ToolTip="Show files modified after the selected date"
+                         VerticalAlignment="Center" />
         </StackPanel>
-        
-        <!-- Start button -->
+
+        <!-- Start Scan button -->
         <Button Grid.Row="2"
                 Content="Start Scan"
                 Width="120"
-                Click="StartButton_Click" Margin="0,0,0,8" />
-        
+                Height="30"
+                HorizontalAlignment="Center"
+                Click="StartButton_Click" 
+                Margin="0,0,0,10" Background="#FFFFE5A0" >
+  
+        </Button>
+
         <!-- Results -->
         <DataGrid Grid.Row="3"
                   x:Name="ResultsDataGrid"
@@ -55,7 +130,7 @@
                                     Binding="{Binding FilePath}"
                                     Width="*" />
                 <DataGridTextColumn Header="Last Modified"
-                                    Binding="{Binding LastModified, StringFormat=dd/MM/yyyy HH:mm:ss}"
+                                    Binding="{Binding LastModified, StringFormat=dd/MM/yyyy HH:mm}"
                                     Width="200" />
                 <DataGridTextColumn Header="Owner"
                                     Binding="{Binding Owner}"

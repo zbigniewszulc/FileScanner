@@ -14,57 +14,78 @@ namespace FileScanner.Services
 {
     public class FileScannerService
     {
-        public ScanResult Scan
+        // Main method resposible for scanning the selected folder
+        public async Task<ScanResult> ScanAsync
         (
             string folderPath,
             DateTime targetDate,
-            bool beforeDate
+            bool beforeDate,
+            bool includeHiddenFiles,
+            bool includeSystemFiles
         )
         {
-            var results = new List<FileResult>();
+            // We measure execution time to show later in the summary popup
             var stopwatch = Stopwatch.StartNew();
-            try 
+
+            // This list will store all matching files
+            var results = new List<FileResult>();
+
+            // Run the scan in the background so the UI stays responsive
+            await Task.Run(() =>
             {
-                foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
+                try
                 {
-                    try 
+                    // Go through all files in the folder (including subfolders)
+                    foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
                     {
-                        DateTime lastWrite = File.GetLastWriteTime(filePath);
-                        bool matches = beforeDate ? lastWrite < targetDate : lastWrite > targetDate;
-
-                        if ( !matches ) 
-                            continue;
-
-                        string owner = GetFileOwner(filePath);
-
-                        results.Add(new FileResult
+                        try
                         {
-                            FilePath = filePath,
-                            LastModified = lastWrite,
-                            Owner = owner
-                        });
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        // No acceess - we skip it
-                    }
-                    catch (PathTooLongException)
-                    {
-                        // Too long path - we skip it
-                    }
-                    catch (IOException)
-                    {
-                        // The file may have been deleted during scanning - we skip it
+                            // We using FileInfo to access attributes and metadata
+                            var fileInfo = new FileInfo(filePath);
+
+                            // Skip hidden files if the user didn't include them
+                            if (!includeHiddenFiles && fileInfo.Attributes.HasFlag(FileAttributes.Hidden)) 
+                                continue;
+
+                            // Skip system files if the user didn't include them
+                            if (!includeSystemFiles && fileInfo.Attributes.HasFlag(FileAttributes.System))
+                                continue;
+
+                            // Get last modified date of the file
+                            DateTime lastWrite = fileInfo.LastWriteTime;
+
+                            // Check if the file matches the slected date condition
+                            bool matches = beforeDate ? lastWrite < targetDate : lastWrite > targetDate;
+
+                            if (!matches)
+                                continue;
+
+                            // Try to get file owner (may fail if no permission) 
+                            string owner = GetFileOwner(filePath);
+
+                            // Add matching file to results
+                            results.Add(new FileResult
+                            {
+                                FilePath = filePath,
+                                LastModified = lastWrite,
+                                Owner = owner
+                            });
+                        }
+                        catch 
+                        {
+                            // If we can't acceess specyfic file - we skip it to prevent craching
+                        }
                     }
                 }
-            }
-            catch (UnauthorizedAccessException)
-            {
-                // No access to the root folder
-            }
+                catch 
+                {
+                    // If we can't access specyfic folder -  we skip it to prevent craching
+                }
+            });
 
             stopwatch.Stop();
 
+            //Return results along with execution duration
             return new ScanResult
             {
                 Results = results,
@@ -72,23 +93,19 @@ namespace FileScanner.Services
             };
         }
 
-        public async Task<ScanResult> ScanAsync(
-            string folderPath,
-            DateTime targetDate,
-            bool beforeDate
-        )
-        {
-            return await Task.Run(() => Scan(folderPath, targetDate, beforeDate));
-        }
-
+        // Try to get the file owner
+        // Return "Unknown" if access is denied or retrival failed
         private string GetFileOwner(string path) 
         {
             try 
             {
                 var fileInfo = new FileInfo(path);
+                // Get file security information (permission, owner, etc.)
                 var security = fileInfo.GetAccessControl();
+                // Retrieve the file owner in readalble Windows user name
                 var owner = security.GetOwner(typeof(NTAccount));
 
+                // Return owner name if available, otherwise return "Unknown"
                 return owner?.ToString() ?? "Unknown";
             }
             
