@@ -101,8 +101,8 @@ namespace FileScanner
                 ResultsDataGrid.ItemsSource = null;
 
                 // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
-                StartScanButton.IsEnabled = false;
-                ExportButton.Visibility = Visibility.Collapsed;
+                StartButton.IsEnabled = false;
+                ExportButton.Visibility = Visibility.Hidden;
                 ScanProgressBar.Visibility = Visibility.Visible;
 
                 // Run the scan in background to prevent the UI from freeze
@@ -124,8 +124,8 @@ namespace FileScanner
 
                 // Unlock UI (i.e. Enable Start Scan button).
                 // Additionally disable progress bar as the scanning process finalised at this stage
-                StartScanButton.IsEnabled = true;
-                ScanProgressBar.Visibility = Visibility.Collapsed;
+                StartButton.IsEnabled = true;
+                ScanProgressBar.Visibility = Visibility.Hidden;
 
                 // Show summary popup
                 MessageBox.Show(
@@ -139,7 +139,7 @@ namespace FileScanner
                 );
 
                 // Show export button only if we have results
-                ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
             }
             // Catch and display error if any 
             catch (Exception ex)
@@ -230,7 +230,7 @@ namespace FileScanner
         {
             _lastScanResult = null;
             ResultsDataGrid.ItemsSource = null;
-            ExportButton.Visibility = Visibility.Collapsed;
+            ExportButton.Visibility = Visibility.Hidden;
         }
     }
 }

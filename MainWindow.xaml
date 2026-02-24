@@ -41,13 +41,15 @@
                      Grid.Column="1"
                      TextChanged="FilterChanged"
                      VerticalAlignment="Center"
-                     IsReadOnly="True"
-                     Margin="0,0,10,0" 
-                     Background="#FFF1F1F1" />
+                     IsReadOnly="True" 
+                     Height="25"
+                     Background="#FFF1F1F1" 
+                     BorderThickness="1,1,0,1" />
 
             <Button Content="Browse..."
                     Grid.Column="2"
                     Width="100"
+                    Height="25"
                     Click="BrowseButton_Click"
                     Margin="0,0,20,0" />
 
@@ -105,7 +107,8 @@
             <DatePicker x:Name="DatePickerControl" 
                         SelectedDateChanged="FilterChanged"
                         Width="150"
-                        Margin="0,0,15,0" VerticalAlignment="Center"/>
+                        Margin="0,0,15,0" 
+                        VerticalAlignment="Center" />
 
             <RadioButton x:Name="BeforeRadio"
                          Content="Before"
@@ -130,22 +133,36 @@
                     HorizontalAlignment="Center"
                     Margin="0,5,0,5">
 
-            <Button x:Name="StartScanButton"
+            <Button x:Name="StopButton"
+                    Content="Stop Scan"
+                    Click="StopButton_Click"
+                    HorizontalAlignment="Center"
+                    Width="120"
+                    Height="30"
+                    Margin="5"
+                    Background="#E5FFC0AD" 
+                    Visibility="Visible" 
+                    VerticalAlignment="Center" FontWeight="Medium" />
+
+            <Button x:Name="StartButton"
                     Content="Start Scan"
                     Click="StartButton_Click"
                     Margin="5"
                     Width="120"
                     Height="30"
-                    Background="#FFFFE5A0"/>
+                    Background="#FF69F765" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" FontWeight="Bold"/>
 
             <Button x:Name="ExportButton"
                     Content="Export Results"
                     Click="ExportButton_Click"
-                    HorizontalAlignment="Left"
+                    HorizontalAlignment="Center"
                     Width="120"
                     Height="30"
                     Margin="5"
-                    Visibility="Collapsed" />
+                    Visibility="Visible" 
+                    VerticalAlignment="Center" FontWeight="Medium" />
         </StackPanel>
 
         <ProgressBar x:Name="ScanProgressBar"
@@ -153,7 +170,7 @@
                      Height="6"
                      Margin="0,8,0,0"
                      IsIndeterminate="True"
-                     Visibility="Collapsed" />
+                     Visibility="Hidden" />
 
         <!-- ======= -->     
         <!-- Results -->
