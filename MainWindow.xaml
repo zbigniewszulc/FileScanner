@@ -151,7 +151,9 @@
         <!-- ======= -->
         <DataGrid Grid.Row="3"
                   x:Name="ResultsDataGrid"
-                  AutoGenerateColumns="False" >
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File Path"
