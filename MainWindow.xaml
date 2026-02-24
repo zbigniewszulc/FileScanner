@@ -135,14 +135,14 @@
 
             <Button x:Name="StopButton"
                     Content="Stop Scan"
-                    Click="StopButton_Click"
                     HorizontalAlignment="Center"
                     Width="120"
                     Height="30"
                     Margin="5"
-                    Background="#E5FFC0AD" 
-                    Visibility="Visible" 
-                    VerticalAlignment="Center" FontWeight="Medium" />
+                    Background="#FFFFC8C8" 
+                    Visibility="Hidden"
+                    VerticalAlignment="Center" 
+                    FontWeight="Medium" />
 
             <Button x:Name="StartButton"
                     Content="Start Scan"
@@ -150,9 +150,10 @@
                     Margin="5"
                     Width="120"
                     Height="30"
-                    Background="#FF69F765" 
+                    Background="#FFFFD924" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" FontWeight="Bold"/>
+                    VerticalAlignment="Center" 
+                    FontWeight="Bold"/>
 
             <Button x:Name="ExportButton"
                     Content="Export Results"
@@ -161,8 +162,9 @@
                     Width="120"
                     Height="30"
                     Margin="5"
-                    Visibility="Visible" 
-                    VerticalAlignment="Center" FontWeight="Medium" />
+                    Visibility="Hidden" 
+                    VerticalAlignment="Center"
+                    FontWeight="Medium" />
         </StackPanel>
 
         <ProgressBar x:Name="ScanProgressBar"

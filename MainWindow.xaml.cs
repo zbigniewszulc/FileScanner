@@ -102,6 +102,7 @@ namespace FileScanner
 
                 // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
                 StartButton.IsEnabled = false;
+                StopButton.Visibility = Visibility.Visible;
                 ExportButton.Visibility = Visibility.Hidden;
                 ScanProgressBar.Visibility = Visibility.Visible;
 
@@ -125,6 +126,7 @@ namespace FileScanner
                 // Unlock UI (i.e. Enable Start Scan button).
                 // Additionally disable progress bar as the scanning process finalised at this stage
                 StartButton.IsEnabled = true;
+                StopButton.Visibility = Visibility.Hidden;
                 ScanProgressBar.Visibility = Visibility.Hidden;
 
                 // Show summary popup
