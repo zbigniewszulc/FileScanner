@@ -134,6 +134,7 @@
                     Margin="0,5,0,5">
 
             <Button x:Name="StopButton"
+                    Click="StopButton_Click"
                     Content="Stop Scan"
                     HorizontalAlignment="Center"
                     Width="120"
@@ -150,7 +151,7 @@
                     Margin="5"
                     Width="120"
                     Height="30"
-                    Background="#FFFFD924" 
+                    Background="#FFFFD50D" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     FontWeight="Bold"/>
