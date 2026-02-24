@@ -7,18 +7,20 @@
         mc:Ignorable="d"
         Icon="Assets/Icons/folder-scanner.ico"
         Title="File Scanner" 
-        Height="470" 
-        Width="850">
+        Height="510" 
+        Width="900">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />  <!-- Folder row-->
+            <RowDefinition Height="Auto" />  <!-- Date + radio row-->
+            <RowDefinition Height="Auto" />  <!-- Start/Export Buttons row-->
+            <RowDefinition Height="*" />     <!-- Results -->
         </Grid.RowDefinitions>
-
-        <!-- Folder row -->
+        
+        <!-- ==================== -->
+        <!-- Folder selection row -->
+        <!-- ==================== -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -36,6 +38,7 @@
 
             <TextBox x:Name="FolderTextBox"
                      Grid.Column="1"
+                     TextChanged="FilterChanged"
                      VerticalAlignment="Center"
                      IsReadOnly="True"
                      Margin="0,0,10,0" 
@@ -50,6 +53,8 @@
             <CheckBox x:Name="IncludeHiddenFilesCheckBox"
                       Grid.Column="3"
                       Content="Hidden"
+                      Checked="FilterChanged"
+                      Unchecked="FilterChanged"
                       VerticalAlignment="Center"
                       Margin="0,0,15,0">
                       
@@ -66,7 +71,9 @@
 
             <CheckBox x:Name="IncludeSystemFilesCheckBox"
                       Grid.Column="4"
-                      Content="System"                
+                      Content="System"     
+                      Checked="FilterChanged"
+                      Unchecked="FilterChanged"
                       VerticalAlignment="Center">
 
                 <CheckBox.ToolTip>
@@ -80,8 +87,10 @@
                 </CheckBox.ToolTip>
             </CheckBox>
         </Grid>
-
+        
+        <!-- ============ -->
         <!-- Date + radio -->
+        <!-- ============ -->
         <StackPanel Grid.Row="1" 
                     Orientation="Horizontal" 
                     VerticalAlignment="Center"
@@ -93,11 +102,13 @@
                    Margin="0,0,10,0" />
 
             <DatePicker x:Name="DatePickerControl" 
+                        SelectedDateChanged="FilterChanged"
                         Width="150"
                         Margin="0,0,15,0" VerticalAlignment="Center"/>
 
             <RadioButton x:Name="BeforeRadio"
                          Content="Before"
+                         Checked="FilterChanged"
                          ToolTip="Show files modified before the selected date"
                          IsChecked="True"
                          VerticalAlignment="Center"
@@ -105,11 +116,14 @@
 
             <RadioButton x:Name="AfterRadio"
                          Content="After"
+                         Checked="FilterChanged"
                          ToolTip="Show files modified after the selected date"
                          VerticalAlignment="Center" />
         </StackPanel>
 
-        <!-- Export Results and Start Scan buttons -->
+        <!-- =================================== -->
+        <!-- Start Scan & Export Results buttons -->
+        <!-- =================================== -->
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -132,7 +146,9 @@
                     Visibility="Collapsed" />
         </StackPanel>
 
+        <!-- ======= -->     
         <!-- Results -->
+        <!-- ======= -->
         <DataGrid Grid.Row="3"
                   x:Name="ResultsDataGrid"
                   AutoGenerateColumns="False" >

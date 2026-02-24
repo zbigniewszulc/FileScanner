@@ -21,19 +21,25 @@ namespace FileScanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ScanResult _lastScanResult;
+        private ScanResult? _lastScanResult;
 
-        // Helper methods to display messages in form of popup
+        // This variable is needed to make sure that Main Windows definitely was Initialised
+        private bool _isLoaded;
+
+        // Helper methods 
+        // Display messages in form of popup
         private void ShowInfo(string message)
         {
             MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        // Display messages in form of popup
         private void ShowError(string message)
         {
             MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        // Display messages in form of popup
         private void ShowWarning(string message)
         {
             MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -43,6 +49,7 @@ namespace FileScanner
         public MainWindow()
         {
             InitializeComponent();
+            _isLoaded = true;
         }
 
         // Runs when user clicks the "Start Scan" button 
@@ -129,7 +136,6 @@ namespace FileScanner
             }
         }
 
-
         // When "Browse..." button is clicked, this method sets the folder text box and tooltip content for the selected folder
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -195,6 +201,24 @@ namespace FileScanner
                     ShowError($"Export failed: {ex.Message}");
                 }
             }
+        }
+
+        // This method will trigger when user changed any search criteria/filter
+        private void FilterChanged(object sender, RoutedEventArgs e)
+        {
+            // If the MainWindow has not been loaded yet do not reset results state
+            if (!_isLoaded)
+                return;
+            // Any filter change means that previous results are no longer valid
+            ResetResultsState();
+        }
+
+        // Reset last scan results and hides Export Button in the UI
+        private void ResetResultsState()
+        {
+            _lastScanResult = null;
+            ResultsDataGrid.ItemsSource = null;
+            ExportButton.Visibility = Visibility.Collapsed;
         }
     }
 }
