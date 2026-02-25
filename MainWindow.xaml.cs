@@ -63,7 +63,7 @@ namespace FileScanner
             // It might happen that folder was removed by other user after added via Browse button 
             if (!Directory.Exists(folderPath))
             {
-                ShowWarning("Folder does not exist.");
+                ShowWarning("Selected folder does not exist.");
                 return;
             }
 
