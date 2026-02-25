@@ -194,7 +194,7 @@ namespace FileScanner
             string formattedDate = selectedDate.ToString("dd-MM-yyyy");
 
             // Build a default file name based on scan mode and selected date
-            string defaultFileName = $"FileAudit_{mode}_{formattedDate}.csv";
+            string defaultFileName = $"FileAudit_{mode}_{formattedDate}_{_lastScanResult.Results.Count}files.csv";
 
             // Create and configure Save File Dialog and save in memory for further use
             // The filter limits the selection to CSV File only and
