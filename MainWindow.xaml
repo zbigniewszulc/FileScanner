@@ -22,6 +22,7 @@
         <!-- ==================== -->
         <!-- Folder selection row -->
         <!-- ==================== -->
+        <StackPanel x:Name="UIFilterSection">
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -126,6 +127,10 @@
                          VerticalAlignment="Center" />
         </StackPanel>
 
+        </StackPanel>
+
+
+
         <!-- =================================== -->
         <!-- Start Scan & Export Results buttons -->
         <!-- =================================== -->
@@ -138,11 +143,10 @@
                     Click="StopButton_Click"
                     Content="Stop Scan"
                     HorizontalAlignment="Center"
-                    Width="120"
+                    Width="115"
                     Height="30"
                     Margin="5"
-                    Background="#FFFD4C4C" 
- 
+                    Visibility="Hidden"
                     VerticalAlignment="Center" 
                     FontWeight="Medium" />
 
@@ -150,9 +154,9 @@
                     Content="Start Scan"
                     Click="StartButton_Click"
                     Margin="5"
-                    Width="120"
+                    Width="115"
                     Height="30"
-                    Background="#FFFFD50D" 
+                    Background="#FFB0D3F0" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     FontWeight="Bold"/>
@@ -161,7 +165,7 @@
                     Content="Export Results"
                     Click="ExportButton_Click"
                     HorizontalAlignment="Center"
-                    Width="120"
+                    Width="115"
                     Height="30"
                     Margin="5"
                     Visibility="Hidden" 
