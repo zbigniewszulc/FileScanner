@@ -86,6 +86,9 @@ namespace FileScanner
             //Check if use selected system proteced files
             bool includeSystemFiles = IncludeSystemFilesCheckBox.IsChecked == true;
 
+            // Hide Export Button 
+            ExportButton.Visibility = Visibility.Hidden;
+
             try
             {
                 // Intialise cancellation - create cancellation source for this scan session
@@ -193,8 +196,11 @@ namespace FileScanner
             string mode = beforeDate ? "Before" : "After";
             string formattedDate = selectedDate.ToString("dd-MM-yyyy");
 
+            // This variable stores singular or plural form of the file name ending
+            string fileEnding = _lastScanResult.Results.Count == 1 ? "file" : "files";
+
             // Build a default file name based on scan mode and selected date
-            string defaultFileName = $"FileAudit_{mode}_{formattedDate}_{_lastScanResult.Results.Count}files.csv";
+            string defaultFileName = $"FileAudit_{mode}_{formattedDate}_{_lastScanResult.Results.Count}{fileEnding}.csv";
 
             // Create and configure Save File Dialog and save in memory for further use
             // The filter limits the selection to CSV File only and
