@@ -107,11 +107,8 @@ namespace FileScanner
                 // Clear old results before running the scan
                 ResultsDataGrid.ItemsSource = null;
 
-                // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
-                StartButton.IsEnabled = false;
-                StopButton.Visibility = Visibility.Visible;
-                ExportButton.Visibility = Visibility.Hidden;
-                ScanProgressBar.Visibility = Visibility.Visible;
+                // Lock UI so user will not be able to click any buttons 
+                LockUI();
 
                 // Run the scan in background to prevent the UI from freeze
                 // Among multiple passed arguments, also pas cancellation token to the service 
@@ -263,10 +260,20 @@ namespace FileScanner
             _cancellationTokenSource.Cancel();
         }
 
+        private void LockUI() 
+        {
+            // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
+            UIFilterSection.IsEnabled = false;
+            StartButton.IsEnabled = false;
+            StopButton.Visibility = Visibility.Visible;
+            ScanProgressBar.Visibility = Visibility.Visible;
+        }
+
         private void UnlockUI() 
         {
             // Unlock UI (i.e. Enable Start Scan button).
             // Additionally disable progress bar as the scanning process finalised at this stage
+            UIFilterSection.IsEnabled = true;
             StartButton.IsEnabled = true;
             StopButton.Visibility = Visibility.Hidden;
             ScanProgressBar.Visibility = Visibility.Hidden;
