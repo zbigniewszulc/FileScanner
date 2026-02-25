@@ -170,7 +170,7 @@
                     Margin="5"
                     Width="115"
                     Height="30"
-                    Background="#FFB0D3F0" 
+                    Background="#FF99C2E2" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     FontWeight="Bold"/>
