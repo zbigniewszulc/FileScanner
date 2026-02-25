@@ -141,8 +141,8 @@
                     Width="120"
                     Height="30"
                     Margin="5"
-                    Background="#FFFFC8C8" 
-                    Visibility="Hidden"
+                    Background="#FFFD4C4C" 
+ 
                     VerticalAlignment="Center" 
                     FontWeight="Medium" />
 
