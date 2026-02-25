@@ -35,58 +35,59 @@ namespace FileScanner.Services
             // Run the scan in the background so the UI stays responsive
             await Task.Run(() =>
             {
-                try
+                // Go through all files in the folder (including subfolders)
+                foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
                 {
-                    // Go through all files in the folder (including subfolders)
-                    foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
+                    // Check whether cancellation was requested and stop immediately if so
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    try
                     {
-                        try
+                        // We using FileInfo to access attributes and metadata
+                        var fileInfo = new FileInfo(filePath);
+
+                        // Skip hidden files if the user didn't include them
+                        if (!includeHiddenFiles && fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
+                            continue;
+
+                        // Skip system files if the user didn't include them
+                        if (!includeSystemFiles && fileInfo.Attributes.HasFlag(FileAttributes.System))
+                            continue;
+
+                        // Get last modified date of the file
+                        DateTime lastWrite = fileInfo.LastWriteTime;
+
+                        // Check if the file matches the slected date condition
+                        bool matches = beforeDate ? lastWrite < targetDate : lastWrite > targetDate;
+
+                        if (!matches)
+                            continue;
+
+                        // Try to get file owner (may fail if no permission) 
+                        string owner = GetFileOwner(filePath);
+
+                        // Add matching file to results
+                        results.Add(new FileResult
                         {
-                            // Check whether cancellation was requested and stop immediately if so
-                            cancellationToken.ThrowIfCancellationRequested();
+                            FilePath = filePath,
+                            LastModified = lastWrite,
+                            Owner = owner
+                        });
+                    }
+                    
+                    catch (UnauthorizedAccessException)
+                    {
+                        // Skip files we do not have permission to access
+                        continue;
+                    }
 
-                            // We using FileInfo to access attributes and metadata
-                            var fileInfo = new FileInfo(filePath);
-
-                            // Skip hidden files if the user didn't include them
-                            if (!includeHiddenFiles && fileInfo.Attributes.HasFlag(FileAttributes.Hidden)) 
-                                continue;
-
-                            // Skip system files if the user didn't include them
-                            if (!includeSystemFiles && fileInfo.Attributes.HasFlag(FileAttributes.System))
-                                continue;
-
-                            // Get last modified date of the file
-                            DateTime lastWrite = fileInfo.LastWriteTime;
-
-                            // Check if the file matches the slected date condition
-                            bool matches = beforeDate ? lastWrite < targetDate : lastWrite > targetDate;
-
-                            if (!matches)
-                                continue;
-
-                            // Try to get file owner (may fail if no permission) 
-                            string owner = GetFileOwner(filePath);
-
-                            // Add matching file to results
-                            results.Add(new FileResult
-                            {
-                                FilePath = filePath,
-                                LastModified = lastWrite,
-                                Owner = owner
-                            });
-                        }
-                        catch 
-                        {
-                            // If we can't acceess specyfic file - we skip it to prevent craching
-                        }
+                    catch (PathTooLongException)
+                    {
+                        // Skip problematic paths
+                        continue;
                     }
                 }
-                catch 
-                {
-                    // If we can't access specyfic folder -  we skip it to prevent craching
-                }
-            });
+            }, cancellationToken);
 
             stopwatch.Stop();
 

@@ -133,11 +133,8 @@ namespace FileScanner
                 // Count how many matching files we found 
                 int fileCount = result.Results.Count;
 
-                // Unlock UI (i.e. Enable Start Scan button).
-                // Additionally disable progress bar as the scanning process finalised at this stage
-                StartButton.IsEnabled = true;
-                StopButton.Visibility = Visibility.Hidden;
-                ScanProgressBar.Visibility = Visibility.Hidden;
+                // Unlock UI
+                UnlockUI();
 
                 // Show summary popup
                 MessageBox.Show(
@@ -157,17 +154,20 @@ namespace FileScanner
             // OperationCanceledException is thrown when user cancels the scanning process
             catch (OperationCanceledException)
             {
+                UnlockUI();
                 ShowWarning("Scan was cancelled by user.");
             }
 
             // Catch and display error if any 
             catch (Exception ex)
             {
+                UnlockUI();
                 ShowError($"Scan failed: {ex.Message}");
             }
-            // Clean cancellation source reference
+            
             finally 
             {
+                // Clean cancellation source reference
                 _cancellationTokenSource = null;
             }
         }
@@ -261,6 +261,15 @@ namespace FileScanner
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             _cancellationTokenSource.Cancel();
+        }
+
+        private void UnlockUI() 
+        {
+            // Unlock UI (i.e. Enable Start Scan button).
+            // Additionally disable progress bar as the scanning process finalised at this stage
+            StartButton.IsEnabled = true;
+            StopButton.Visibility = Visibility.Hidden;
+            ScanProgressBar.Visibility = Visibility.Hidden;
         }
     }
 }
