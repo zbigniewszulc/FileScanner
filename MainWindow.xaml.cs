@@ -24,19 +24,19 @@ namespace FileScanner
         // Display messages in form of popup
         private void ShowInfo(string message)
         {
-            MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(message, "File Scanner: Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Display messages in form of popup
         private void ShowError(string message)
         {
-            MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, "File Scanner: Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         // Display messages in form of popup
         private void ShowWarning(string message)
         {
-            MessageBox.Show(message, "Message:", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(message, "File Scanner: Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         // Intialise UI components defined in XAML
@@ -129,13 +129,16 @@ namespace FileScanner
                     $"Total files found: {fileCount}\n" +
                     $"Execution time: {result.Duration.TotalSeconds:F2} sec\n" + "" +
                     $"                          ( {result.Duration.TotalMilliseconds:F0} ms )",
-                    "Scan Results",
+                    "File Scanner: Summary",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
                 );
 
                 // Show export button only if we have results
                 ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+
+                // Show Delete All button only if we have results
+                //DeleteButton.Visibility = result.Results.Count > 0 ? Visibility.Visible: Visibility.Hidden;
             }
 
             // OperationCanceledException is thrown when user cancels the scanning process
@@ -232,6 +235,10 @@ namespace FileScanner
             // If the MainWindow has not been loaded yet do not reset results state
             if (!_isLoaded)
                 return;
+
+            // Hide Delete All button
+            //DeleteButton.Visibility = Visibility.Collapsed;
+
             // Any filter change means that previous results are no longer valid
             ResetResultsState();
         }
@@ -250,23 +257,77 @@ namespace FileScanner
             _cancellationTokenSource.Cancel();
         }
 
+        // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
         private void LockUI()
         {
-            // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
             UIFilterSection.IsEnabled = false;
             StartButton.IsEnabled = false;
             StopButton.Visibility = Visibility.Visible;
             ScanProgressBar.Visibility = Visibility.Visible;
         }
 
+        // Unlock UI (i.e. Enable Start Scan button).
+        // Additionally disable progress bar as the scanning process finalised at this stage
         private void UnlockUI()
         {
-            // Unlock UI (i.e. Enable Start Scan button).
-            // Additionally disable progress bar as the scanning process finalised at this stage
             UIFilterSection.IsEnabled = true;
             StartButton.IsEnabled = true;
             StopButton.Visibility = Visibility.Hidden;
             ScanProgressBar.Visibility = Visibility.Hidden;
         }
+
+        // Handles the click event for "Delete All" button 
+        //private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // If there are no scan results there is nothing to delete 
+        //    if (_lastScanResult == null || _lastScanResult.Results.Count == 0 )
+        //            return;
+
+        //    // Ask user to confirm deletion
+        //    var confirmation = MessageBox.Show
+        //        (
+        //        $"Are you sure you want to permanently delete {_lastScanResult.Results.Count} files?\n\n " +
+        //        $"This action cannot be undone!",
+        //        "File Scanner: Warning",
+        //        MessageBoxButton.YesNo,
+        //        MessageBoxImage.Warning
+        //        );
+
+        //    // Do nothing if user responded "No" in MessageBox
+        //    if (confirmation != MessageBoxResult.Yes)
+        //        return;
+
+        //    // Counters to track how many files were deleted and hom many failed
+        //    int deletedCount = 0; 
+        //    int failedCount = 0;
+
+        //    // Interate through all files
+        //    foreach (var file in _lastScanResult.Results) 
+        //    {
+        //        try 
+        //        {
+        //            // Make sure the files still exists 
+        //            if (File.Exists(file.FilePath)) 
+        //            {
+        //                File.Delete(file.FilePath);
+        //                deletedCount++;
+        //            }
+        //        }
+
+        //        catch 
+        //        {
+        //            failedCount++;
+        //        }
+        //    }
+
+        //    // Display popup with deletion summary
+        //    ShowInfo($"Deletion completed.\n\nDeleted: {deletedCount}\nFailed: {failedCount}");
+
+        //    // Hide Delete All button
+        //    DeleteButton.Visibility = Visibility.Collapsed;
+
+        //    // Refresh UI after deletion
+        //    ResetResultsState();
+        //}
     }
 }
