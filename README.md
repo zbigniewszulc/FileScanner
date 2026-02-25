@@ -3,7 +3,7 @@
 ## Overview 
 This is simple WPF desktop application built in .NET 8.
 
-This project started as a personal challenge, I have been working in web development, but I had never built a desktop app before. I wanted to see whether I could design and deliver Windows application from scratch.
+This project started as a personal challenge, I have been working in web development, but I had never built a desktop app before. I wanted to see whether I could design and deliver Windows application from scratch - mainly as a learning experience and simply for fun.
 
 
 ## What application does
