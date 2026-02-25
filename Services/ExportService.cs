@@ -1,10 +1,6 @@
 ﻿using FileScanner.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FileScanner.Services
 {
@@ -19,7 +15,7 @@ namespace FileScanner.Services
 
             // Use the built-in StringBuilder class to effciently build the CSV content line by line 
             var builder = new StringBuilder();
-            
+
             //CSV headers row
             builder.AppendLine("File Path, Last modified, Owner");
 

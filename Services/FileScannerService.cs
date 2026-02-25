@@ -1,14 +1,7 @@
 ﻿using FileScanner.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Threading;
 
 namespace FileScanner.Services
 {
@@ -22,7 +15,7 @@ namespace FileScanner.Services
             DateTime targetDate,
             bool beforeDate,
             bool includeHiddenFiles,
-            bool includeSystemFiles, 
+            bool includeSystemFiles,
             CancellationToken cancellationToken
         )
         {
@@ -74,7 +67,7 @@ namespace FileScanner.Services
                             Owner = owner
                         });
                     }
-                    
+
                     catch (UnauthorizedAccessException)
                     {
                         // Skip files we do not have permission to access
@@ -101,9 +94,9 @@ namespace FileScanner.Services
 
         // Try to get the file owner
         // Return "Unknown" if access is denied or retrival failed
-        private string GetFileOwner(string path) 
+        private string GetFileOwner(string path)
         {
-            try 
+            try
             {
                 var fileInfo = new FileInfo(path);
                 // Get file security information (permission, owner, etc.)
@@ -114,10 +107,10 @@ namespace FileScanner.Services
                 // Return owner name if available, otherwise return "Unknown"
                 return owner?.ToString() ?? "Unknown";
             }
-            
-            catch 
+
+            catch
             {
-                return "Unknown"; 
+                return "Unknown";
             }
         }
     }

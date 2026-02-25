@@ -1,18 +1,8 @@
-﻿using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FileScanner.Models;
+﻿using FileScanner.Models;
 using FileScanner.Services;
 using Microsoft.Win32;
-using System.Threading;
+using System.IO;
+using System.Windows;
 
 
 namespace FileScanner
@@ -63,11 +53,11 @@ namespace FileScanner
             string folderPath = FolderTextBox.Text;
 
             // If no folder has been selected
-            if (string.IsNullOrWhiteSpace(folderPath)) 
+            if (string.IsNullOrWhiteSpace(folderPath))
             {
                 ShowWarning("Please select a folder first.");
                 return;
-            } 
+            }
 
             // No point scanning if the folder dosn't exist.
             // It might happen that folder was removed by other user after added via Browse button 
@@ -118,7 +108,7 @@ namespace FileScanner
                     selectedDate,
                     beforeDate,
                     includeHiddenFiles,
-                    includeSystemFiles, 
+                    includeSystemFiles,
                     _cancellationTokenSource.Token
                 );
 
@@ -161,8 +151,8 @@ namespace FileScanner
                 UnlockUI();
                 ShowError($"Scan failed: {ex.Message}");
             }
-            
-            finally 
+
+            finally
             {
                 // Clean cancellation source reference
                 _cancellationTokenSource = null;
@@ -175,7 +165,7 @@ namespace FileScanner
             var dialog = new OpenFolderDialog();
 
             if (dialog.ShowDialog() == true)
-            { 
+            {
                 FolderTextBox.Text = dialog.FolderName;
                 FolderTextBox.ToolTip = dialog.FolderName;
             }
@@ -217,7 +207,7 @@ namespace FileScanner
             // If user clicked Cancel the dialog closes and nothing happens
             if (dialog.ShowDialog() == true)
             {
-                try 
+                try
                 {
                     // Create the service responsible for exporting the CSV file
                     var exportService = new ExportService();
@@ -229,7 +219,7 @@ namespace FileScanner
                     ShowInfo("Export completed successfully.");
                 }
                 // If something goes wrong during export show an error to the user
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     ShowError($"Export failed: {ex.Message}");
                 }
@@ -260,7 +250,7 @@ namespace FileScanner
             _cancellationTokenSource.Cancel();
         }
 
-        private void LockUI() 
+        private void LockUI()
         {
             // Lock the UI (i.e. Disable Start Scan button, Collapse the Export Results button )
             UIFilterSection.IsEnabled = false;
@@ -269,7 +259,7 @@ namespace FileScanner
             ScanProgressBar.Visibility = Visibility.Visible;
         }
 
-        private void UnlockUI() 
+        private void UnlockUI()
         {
             // Unlock UI (i.e. Enable Start Scan button).
             // Additionally disable progress bar as the scanning process finalised at this stage
