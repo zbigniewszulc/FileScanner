@@ -44,7 +44,8 @@
                      IsReadOnly="True" 
                      Height="25"
                      Background="#FFF1F1F1" 
-                     BorderThickness="1,1,0,1" />
+                     BorderThickness="1,1,0,1" 
+                     VerticalContentAlignment="Center" />
 
             <Button Content="Browse..."
                     Grid.Column="2"
