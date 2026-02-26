@@ -36,11 +36,44 @@ This project started as a personal challenge, I have been working in web develop
     Think of it this way: if any part of the file is still "restricted" by an unchecked box, it stays hidden. 
     To make sure you see everything, it's best to check both boxes.
 
-	### Date Filter behavior:
+	### Date Filter behaviour:
 	> The **Before** and **After** filters do not include the selected date.
 		
 	If you want to include a specific day in a **Before** search, select the next day and choose **Before**
-	The same logic applies to **After** - the selected date is always excluded ! 		
+	The same logic applies to **After** - the selected date is always excluded ! 
+
+
+## Performance & Responsiveness
+
+This application was designed with scanning speed and UI responsiveness in mind.
+
+The scanning process runs in a way that does not block the user interface. 
+
+Even during large scans, the UI remains responsive and the user can cancel the scan if needed.
+
+### Performance Test
+
+A performance test was conducted on a folder of approximately <strong>4GB</strong>, including:
+<ul>
+	<li>
+		regular files
+	</li>
+		<li>
+		hidden files
+	</li>
+		<li>
+		system files
+	</li>
+</ul>
+
+The full scan completed in approximately <strong>45 seconds</strong> :rocket: 
+
+<p align="center">
+  <img src="Assets/Documentation/UseCase88.PNG" alt="Performance test" width="550">
+</p>
+
+This test included scanning subfolders and applying file attribute filters.
+
 
 ## Use Cases
 ### 1. Basic folder scan
@@ -52,7 +85,7 @@ This project started as a personal challenge, I have been working in web develop
 	</tr>
 	<tr>
 		<th>Expected result</th>
-		<td>Application scans the selected folder and subfolders and displays all files that match the choosen date condition</td>
+		<td>Application scans the selected folder and subfolders and displays all files that match the chosen date condition</td>
 	</tr>
 	<tr>
 		<th>Results met?</th>
@@ -75,9 +108,9 @@ Evidence:
 	</tr>
 	<tr>
 		<th>Expected result</th>
-		<td>The results list remians empty.
+		<td>The results list remains empty.
 		A summary windows is displayed, showing:
-		<ul><li>Tital files found: 0</li><li>Execution time: X </li></ul>
+		<ul><li>Total files found: 0</li><li>Execution time: X </li></ul>
 		</td>
 	</tr>
 	<tr>
@@ -124,7 +157,7 @@ Evidence:
 	</tr>
 	<tr>
 		<th>Expected result</th>
-		<td>The scan does not start. User must select a valid date before proceeding. An appriorate message is displayed</td>
+		<td>The scan does not start. User must select a valid date before proceeding. An appropriate message is displayed</td>
 	</tr>
 	<tr>
 		<th>Results met?</th>
@@ -219,7 +252,7 @@ Evidence:
 		<th>Expected result</th>
 		<td>
 			While the scan is running, a progress bar is displayed to indicate that the process is in progress.
-			The progress bar updates during the scan and disappears when the scan finished or was canceled. 
+			The progress bar updates during the scan and disappears when the scan finished or was cancelled. 
 		</td>
 	</tr>
 	<tr>
