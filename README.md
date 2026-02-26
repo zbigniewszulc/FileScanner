@@ -66,7 +66,7 @@ A performance test was conducted on a folder of approximately <strong>4GB</stron
 	</li>
 </ul>
 
-The full scan completed in approximately <strong>45 seconds</strong> :rocket: 
+The full scan completed in approximately <strong>40 seconds</strong> :rocket: 
 
 <p align="center">
   <img src="Assets/Documentation/UseCase88.PNG" alt="Performance test" width="550">
