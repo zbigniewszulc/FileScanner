@@ -170,6 +170,74 @@ Evidence:
   <img src="Assets/Documentation/UseCase55.PNG" alt="Use Case 5" width="800">
 </p>
 
+
+### 6. Stop Scan
+
+<table>
+	<tr>
+		<th>Scenario</th>
+		<td>User starts a scan and decides to stop it before completion by clicking the <em>Stop Scan</em> button</td>
+	</tr>
+	<tr>
+		<th>Expected result</th>
+		<td>
+			The scanning process is immediately stopped.
+			A popup window appears informing the user that: 
+			<ul>
+				<li>
+					The scan was cancelled by the user
+				</li>
+			</ul>
+			No further files are processed after cancellation
+		</td>
+	</tr>
+	<tr>
+		<th>Results met?</th>
+		<td>Yes</td>
+	</tr>
+</table>
+
+Evidence:
+
+<p align="center">
+  <img src="Assets/Documentation/UseCase66.PNG" alt="Use Case 6 pic 1" width="550">
+</p>
+
+<p align="center">
+  <img src="Assets/Documentation/UseCase67.PNG" alt="Use Case 6 pic 2" width="550">
+</p>
+
+
+### 7. Scan Progress Bar
+
+<table>
+	<tr>
+		<th>Scenario</th>
+		<td>User starts a scan of a folder containing multiple files and subfolders</td>
+	</tr>
+	<tr>
+		<th>Expected result</th>
+		<td>
+			While the scan is running, a progress bar is displayed to indicate that the process is in progress.
+			The progress bar updates during the scan and disappears when the scan finished or was canceled. 
+		</td>
+	</tr>
+	<tr>
+		<th>Results met?</th>
+		<td>Yes</td>
+	</tr>
+</table>
+
+Evidence:
+
+<p align="center">
+  <img src="Assets/Documentation/UseCase77.PNG" alt="Use Case 7 pic 1" width="550">
+</p>
+
+<p align="center">
+  <img src="Assets/Documentation/UseCase78.PNG" alt="Use Case 7 pic 2" width="550">
+</p>
+
  
 ## Technology and tools used
 * .NET
