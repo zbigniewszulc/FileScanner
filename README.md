@@ -6,7 +6,7 @@ This is simple WPF desktop application built in .NET 8.
 This project started as a personal challenge, I have been working in web development, but I had never built a desktop app before. I wanted to see whether I could design and deliver Windows application from scratch - mainly as a learning experience and simply for fun.
 
 <p align="center">
-  <img src="Assets/Documentation/FileScannerProgram.PNG" alt="File Scanner Program" width="550">
+  <img src="Assets/Documentation/FileScannerProgram_.PNG" alt="File Scanner Program" width="550">
 </p>
 
 ## What application does
@@ -63,7 +63,7 @@ This project started as a personal challenge, I have been working in web develop
 Evidence:
 
 <p align="center">
-  <img src="Assets/Documentation/UseCase1.PNG" alt="Use Case 1" width="550">
+  <img src="Assets/Documentation/UseCase11.PNG" alt="Use Case 1" width="550">
 </p>
 
 ### 2. No matching files
@@ -89,7 +89,7 @@ Evidence:
 Evidence:
 
 <p align="center">
-  <img src="Assets/Documentation/UseCase2.PNG" alt="Use Case 2" width="550">
+  <img src="Assets/Documentation/UseCase22.PNG" alt="Use Case 2" width="550">
 </p>
 
 ### 3. No folder selected
@@ -112,7 +112,7 @@ Evidence:
 Evidence:
 
 <p align="center">
-  <img src="Assets/Documentation/UseCase3.PNG" alt="Use Case 3" width="550">
+  <img src="Assets/Documentation/UseCase33.PNG" alt="Use Case 3" width="550">
 </p>
 
 ### 4. No date selected 
@@ -135,7 +135,7 @@ Evidence:
 Evidence:
 
 <p align="center">
-  <img src="Assets/Documentation/UseCase4.PNG" alt="Use Case 4" width="550">
+  <img src="Assets/Documentation/UseCase44.PNG" alt="Use Case 4" width="550">
 </p>
 
 ### 5. Hidden and System files
