@@ -167,7 +167,7 @@ Evidence:
 Evidence:
 
 <p align="center">
-  <img src="Assets/Documentation/UseCase55.PNG" alt="Use Case 5" width="650">
+  <img src="Assets/Documentation/UseCase55.PNG" alt="Use Case 5" width="800">
 </p>
 
  
