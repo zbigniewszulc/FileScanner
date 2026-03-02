@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileScanner.Models
 {
-    internal class ScanError
+    public class ScanError
     {
         public string Path { get; set; } = string.Empty;
         public string Reason { get; set; } = string.Empty;
