@@ -141,7 +141,7 @@ namespace FileScanner
                 ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
 
                 // Show Delete All button only if we have results
-                //DeleteButton.Visibility = result.Results.Count > 0 ? Visibility.Visible: Visibility.Hidden;
+                DeleteButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
             }
 
             // OperationCanceledException is thrown when user cancels the scanning process
@@ -243,7 +243,7 @@ namespace FileScanner
                 return;
 
             // Hide Delete All button
-            //DeleteButton.Visibility = Visibility.Collapsed;
+            DeleteButton.Visibility = Visibility.Hidden;
 
             // Any filter change means that previous results are no longer valid
             ResetResultsState();
@@ -283,57 +283,57 @@ namespace FileScanner
         }
 
         // Handles the click event for "Delete All" button 
-        //private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // If there are no scan results there is nothing to delete 
-        //    if (_lastScanResult == null || _lastScanResult.Results.Count == 0 )
-        //            return;
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            // If there are no scan results there is nothing to delete 
+            if (_lastScanResult == null || _lastScanResult.Results.Count == 0)
+                return;
 
-        //    // Ask user to confirm deletion
-        //    var confirmation = MessageBox.Show
-        //        (
-        //        $"Are you sure you want to permanently delete {_lastScanResult.Results.Count} files?\n\n " +
-        //        $"This action cannot be undone!",
-        //        "File Scanner: Warning",
-        //        MessageBoxButton.YesNo,
-        //        MessageBoxImage.Warning
-        //        );
+            // Ask user to confirm deletion
+            var confirmation = MessageBox.Show
+                (
+                $"Are you sure you want to permanently delete {_lastScanResult.Results.Count} files?\n\n " +
+                $"This action cannot be undone!",
+                "File Scanner: Warning",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+                );
 
-        //    // Do nothing if user responded "No" in MessageBox
-        //    if (confirmation != MessageBoxResult.Yes)
-        //        return;
+            // Do nothing if user responded "No" in MessageBox
+            if (confirmation != MessageBoxResult.Yes)
+                return;
 
-        //    // Counters to track how many files were deleted and hom many failed
-        //    int deletedCount = 0; 
-        //    int failedCount = 0;
+            // Counters to track how many files were deleted and hom many failed
+            int deletedCount = 0;
+            int failedCount = 0;
 
-        //    // Interate through all files
-        //    foreach (var file in _lastScanResult.Results) 
-        //    {
-        //        try 
-        //        {
-        //            // Make sure the files still exists 
-        //            if (File.Exists(file.FilePath)) 
-        //            {
-        //                File.Delete(file.FilePath);
-        //                deletedCount++;
-        //            }
-        //        }
+            // Interate through all files
+            foreach (var file in _lastScanResult.Results)
+            {
+                try
+                {
+                    // Make sure the files still exists 
+                    if (File.Exists(file.FilePath))
+                    {
+                        File.Delete(file.FilePath);
+                        deletedCount++;
+                    }
+                }
 
-        //        catch 
-        //        {
-        //            failedCount++;
-        //        }
-        //    }
+                catch
+                {
+                    failedCount++;
+                }
+            }
 
-        //    // Display popup with deletion summary
-        //    ShowInfo($"Deletion completed.\n\nDeleted: {deletedCount}\nFailed: {failedCount}");
+            // Display popup with deletion summary
+            ShowInfo($"Deletion completed.\n\nDeleted: {deletedCount}\nFailed: {failedCount}");
 
-        //    // Hide Delete All button
-        //    DeleteButton.Visibility = Visibility.Collapsed;
+            // Hide Delete All button
+            DeleteButton.Visibility = Visibility.Collapsed;
 
-        //    // Refresh UI after deletion
-        //    ResetResultsState();
-        //}
+            // Refresh UI after deletion
+            ResetResultsState();
+        }
     }
 }

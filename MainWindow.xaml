@@ -139,19 +139,19 @@
                     HorizontalAlignment="Center"
                     Margin="0,5,0,5">
             
-            <!-- 
+
             <Button x:Name="DeleteButton"
                     Content="Delete All"
                     Width="120"
                     Height="30"
                     Margin="5"
-                    Visibility="Collapsed"
+                    Visibility="Visible"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     FontWeight="Medium" 
                     Background="#FFFF6767" 
                     Click="DeleteButton_Click" />
-            -->
+
             
             <Button x:Name="StopButton"
                     Click="StopButton_Click"
