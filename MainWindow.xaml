@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Icon="Assets/Icons/folder-scanner.ico"
         Title="File Scanner" 
-        Height="510" 
-        Width="900">
+        Height="700" 
+        Width="1100"
+        Background="#FAFAFA">
 
     <!-- Define local styles for consistent buttons appearance and behavior across the application -->
     <!-- Override the default styles and behaviors -->
@@ -26,31 +27,31 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
-                                Background="#1F3A5F"
-                                CornerRadius="3">
+                        Background="#1F3A5F"
+                        CornerRadius="3">
                             <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                                      VerticalAlignment="Center" />
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#162A44" />
+                                Property="Background"
+                                Value="#162A44" />
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#0F1F33" />
+                                Property="Background"
+                                Value="#0F1F33" />
                             </Trigger>
 
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#B0BEC5" />
+                                Property="Background"
+                                Value="#B0BEC5" />
                                 <Setter Property="Foreground"
-                                        Value="#ECEFF1" />
+                                Value="#ECEFF1" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -71,25 +72,25 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
-                     Background="#EEF1F5"
-                     BorderBrush="#D0D5DD"
-                     BorderThickness="1"
-                     CornerRadius="3">
+                        Background="#EEF1F5"
+                        BorderBrush="#D0D5DD"
+                        BorderThickness="1"
+                        CornerRadius="3">
                             <ContentPresenter HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
+                                      VerticalAlignment="Center" />
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border"
-                             Property="Background"
-                             Value="#E2E6EA" />
+                                Property="Background"
+                                Value="#E2E6EA" />
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border"
-                             Property="Background"
-                             Value="#DCE1E6" />
+                                Property="Background"
+                                Value="#DCE1E6" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -109,23 +110,23 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
-                     Background="#B42318"
-                     CornerRadius="3">
+                        Background="#B42318"
+                        CornerRadius="3">
                             <ContentPresenter HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
+                                      VerticalAlignment="Center" />
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border"
-                             Property="Background"
-                             Value="#8F1A14" />
+                                Property="Background"
+                                Value="#8F1A14" />
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border"
-                             Property="Background"
-                             Value="#721611" />
+                                Property="Background"
+                                Value="#721611" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -135,218 +136,376 @@
 
     </Window.Resources>
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />  <!-- Folder row-->
-            <RowDefinition Height="Auto" />  <!-- Date + radio row-->
-            <RowDefinition Height="Auto" />  <!-- Start/Export Buttons row-->
-            <RowDefinition Height="Auto" />  <!-- Progress status -->
-            <RowDefinition Height="*" />     <!-- Results -->
-        </Grid.RowDefinitions>
-        
-        <!-- ==================== -->
-        <!-- Folder selection row -->
-        <!-- ==================== -->
-        <StackPanel x:Name="UIFilterSection">
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="450" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <Grid>
 
-            <Label Content="Folder:"
-                   Grid.Column="0"
-                   Width="55"
-                   VerticalAlignment="Center"
-                   Margin="0,0,10,0" />
+        <!-- ========= -->
+        <!-- SCAN VIEW -->
+        <!-- ========= -->
+        <Grid x:Name="ScanView" Margin="15">
 
-            <TextBox x:Name="FolderTextBox"
-                     Grid.Column="1"
-                     TextChanged="FilterChanged"
-                     VerticalAlignment="Center"
-                     IsReadOnly="True" 
-                     MinHeight="28"
-                     Background="#F2F4F7"
-                     BorderBrush="#B8C1CC" 
-                     VerticalContentAlignment="Center" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!-- Folder selection row -->
+                <RowDefinition Height="Auto" /> <!-- Date filter row -->
+                <RowDefinition Height="Auto" /> <!-- Start/Stop buttons row -->
+                <RowDefinition Height="Auto" /> <!-- Results header row -->
+                <RowDefinition Height="*" />    <!-- Results grid -->
+                <RowDefinition Height="Auto" /> <!-- Actions under grid -->
+            </Grid.RowDefinitions>
 
-            <Button Content="Browse..."
-                    Grid.Column="2"
-                    Width="100"
-                    Click="BrowseButton_Click"
-                    Margin="0,0,20,0" 
-                    MinHeight="28"
-                    Style="{StaticResource SecondaryButton}" />
+            <!-- ==================== -->
+            <!-- FOLDER SELECTION ROW -->
+            <!-- ==================== -->
+            <StackPanel x:Name="UIFilterSection" Grid.Row="0">
 
-            <CheckBox x:Name="IncludeHiddenFilesCheckBox"
-                      Grid.Column="3"
-                      Content="Hidden"
-                      Checked="FilterChanged"
-                      Unchecked="FilterChanged"
-                      VerticalAlignment="Center"
-                      Margin="0,0,15,0">
-                      
-                <CheckBox.ToolTip>
-                    <TextBlock>
-                        Tick this box to include hidden files.
-                        <LineBreak />
-                        Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
-                        <LineBreak />
-                        Select all applicable options to include them.
-                    </TextBlock>
-                </CheckBox.ToolTip>
-            </CheckBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/> <!-- Folder Label -->
+                        <ColumnDefinition Width="500"/>  <!-- Folder TextBox -->
+                        <ColumnDefinition Width="Auto"/> <!-- Folder Browse Button -->
+                        <ColumnDefinition Width="Auto"/> <!-- "Include files" label -->
+                        <ColumnDefinition Width="Auto"/> <!-- Hidden checkbox -->
+                        <ColumnDefinition Width="Auto"/> <!-- System checkbox -->
+                    </Grid.ColumnDefinitions>
 
-            <CheckBox x:Name="IncludeSystemFilesCheckBox"
-                      Grid.Column="4"
-                      Content="System"     
-                      Checked="FilterChanged"
-                      Unchecked="FilterChanged"
-                      VerticalAlignment="Center">
+                    <Label Content="Folder:"
+                           Grid.Column="0"
+                           Width="55"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
 
-                <CheckBox.ToolTip>
-                    <TextBlock>
-                            Tick this box to include protected system files.
-                            <LineBreak />
-                            Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
-                            <LineBreak />
-                            Select all applicable options to include them.
-                    </TextBlock>
-                </CheckBox.ToolTip>
-            </CheckBox>
+                    <TextBox x:Name="FolderTextBox"
+                             Grid.Column="1"
+                             TextChanged="FilterChanged"
+                             IsReadOnly="True"
+                             MinHeight="28"
+                             Background="#F2F4F7"
+                             BorderBrush="#B8C1CC"
+                             VerticalContentAlignment="Center" />
+
+                    <Button Content="Browse..."
+                            Grid.Column="2"
+                            Width="100"
+                            Click="BrowseButton_Click"
+                            Margin="0,0,20,0"
+                            
+                            Style="{StaticResource SecondaryButton}" />
+
+                    <TextBlock Grid.Column="3"
+                           Text="Include files:"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
+
+                    <CheckBox x:Name="IncludeHiddenFilesCheckBox"
+                              Grid.Column="4"
+                              Content="Hidden"
+                              Checked="FilterChanged"
+                              Unchecked="FilterChanged"
+                              VerticalAlignment="Center"
+                              Margin="0,0,15,0">
+
+                        <CheckBox.ToolTip>
+                            <TextBlock>
+                                Tick this box to include hidden files.
+                                <LineBreak />
+                                Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
+                                <LineBreak />
+                                Select all applicable options to include them.
+                            </TextBlock>
+                        </CheckBox.ToolTip>
+                    </CheckBox>
+
+                    <CheckBox x:Name="IncludeSystemFilesCheckBox"
+                              Grid.Column="5"
+                              Content="System"
+                              Checked="FilterChanged"
+                              Unchecked="FilterChanged"
+                              VerticalAlignment="Center">
+
+                        <CheckBox.ToolTip>
+                            <TextBlock>
+                                Tick this box to include protected system files.
+                                <LineBreak />
+                                Note: Some files may have mutiple attributes at the same time (e.g. Hidden and System).
+                                <LineBreak />
+                                Select all applicable options to include them.
+                            </TextBlock>
+                        </CheckBox.ToolTip>
+                    </CheckBox>
+                </Grid>
+
+                <TextBlock Text="Scanning includes all subfolders"
+                           FontSize="11"
+                           Foreground="#667085"
+                           Margin="65,5,0,0" />
+
+
+                <!-- =================== -->
+                <!-- DATE FILTER SECTION -->
+                <!-- =================== -->
+                <StackPanel Orientation="Horizontal" 
+                            Margin="0,10,0,10">
+                    <Label Content="Date"
+                           Width="55"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+
+                    <DatePicker x:Name="DatePickerControl"
+                                SelectedDateChanged="FilterChanged"
+                                Width="150"
+                                Margin="0,0,15,0" 
+                                VerticalAlignment="Center" />
+
+                    <RadioButton x:Name="BeforeRadio"
+                                 Content="Before"
+                                 Checked="FilterChanged"
+                                 ToolTip="Show files modified before the selected date"
+                                 IsChecked="True"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,10,0" />
+
+                    <RadioButton x:Name="AfterRadio"
+                                 Content="After"
+                                 Checked="FilterChanged"
+                                 ToolTip="Show files modified after the selected date"
+                                 VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- ====================== -->
+            <!-- START AND STOP BUTTONS -->
+            <!-- ====================== -->
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Margin="0,5,0,5">
+
+                <Button x:Name="StartButton"
+                        Style="{StaticResource PrimaryButton}"
+                        Content="Start Scan"
+                        Click="StartButton_Click"
+                        Width="150" />
+
+                <Button x:Name="StopButton"
+                        Style="{StaticResource SecondaryButton}"
+                        Content="Stop"
+                        Click="StopButton_Click"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Visibility="Hidden" />
+            </StackPanel>
+
+            <ProgressBar x:Name="ScanProgressBar"
+                         Grid.Row="2"
+                         Height="6"
+                         Margin="0,5,0,10"
+                         IsIndeterminate="True"
+                         Visibility="Hidden" />
+
+            <Grid Grid.Row="3" Margin="0,5,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /> <!-- Section Title takes all available space -->
+                    <ColumnDefinition Width="Auto" /> <!-- Summary is auto-sized to content -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Section title -->
+                <TextBlock Text="Scan Results:"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center" />
+
+                <!-- Summary aligned right -->
+                <TextBlock x:Name="ResultsSummaryText"
+                           Grid.Column="1"
+                           FontSize="12"
+                           Foreground="#667085"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right" />
+            </Grid>
+
+            <!-- ============ -->
+            <!-- RESULTS GRID -->
+            <!-- ============ -->
+            <DataGrid Grid.Row="4"
+                      x:Name="ResultsDataGrid"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      SelectionMode="Extended"
+                      BorderBrush="#E4E7EC"
+                      Background="White"
+                      RowBackground="White"
+                      AlternatingRowBackground="#F9FAFB"
+                      GridLinesVisibility="Horizontal">
+
+                <DataGrid.Columns>
+                    <!-- Display file path, last modified date, and owner in separate columns -->
+                    <DataGridTextColumn Header="File Path"
+                                        Binding="{Binding FilePath}" 
+                                        Width="*" />
+                    <!-- Format the LastModified property to show date and time in a user-friendly format -->
+                    <DataGridTextColumn Header="Last Modified"
+                                        Binding="{Binding LastModified, StringFormat=dd/MM/yyyy HH:mm}"
+                                        Width="200" />
+                    <!-- Display the owner of the file -->
+                    <DataGridTextColumn Header="Owner"
+                                        Binding="{Binding Owner}"
+                                        Width="200" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- ==================== -->
+            <!-- ACTIONS UNDER GRID -->
+            <!-- ==================== -->
+            <Grid Grid.Row="5" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- Takes all available space to push buttons to the right -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Report Button -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Export Button -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Delete Button -->
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="ReportButton"
+                        Grid.Column="1"
+                        Click="ReportButton_Click"
+                        Width="170"
+                        Margin="5,0"
+                        Visibility="Hidden"
+                        Style="{StaticResource SecondaryButton}">
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                        <!-- Use an emoji as a simple icon for the report button -->
+                        <TextBlock Text="📊"
+                                   FontSize="16"
+                                   Margin="0,0,6,0"
+                                   VerticalAlignment="Center" />
+
+                        <TextBlock Text="Analyse Results"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="ExportButton"
+                        Grid.Column="2"
+                        Content="Export Results"
+                        Click="ExportButton_Click"
+                        Width="160"
+                        Margin="5,0"
+                        Visibility="Hidden"
+                        Style="{StaticResource SecondaryButton}" />
+
+                <Button x:Name="DeleteButton"
+                        Grid.Column="3"
+                        Content="Delete All"
+                        Click="DeleteButton_Click"
+                        Width="140"
+                        Margin="30,0,5,0"
+                        Visibility="Hidden"
+                        Style="{StaticResource DangerButton}" />
+            </Grid>
+
         </Grid>
-        
-        <!-- ============ -->
-        <!-- Date + radio -->
-        <!-- ============ -->
-        <StackPanel Grid.Row="1" 
-                    Orientation="Horizontal" 
-                    VerticalAlignment="Center"
-                    Margin="0,10,0,10">
 
-            <Label Content="Date"
-                   Width="55"
-                   VerticalAlignment="Center"
-                   Margin="0,0,10,0" />
+        <!-- ======================= -->
+        <!-- REPORT VIEW -->
+        <!-- ======================= -->
+        <Grid x:Name="ReportView" Margin="15" Visibility="Collapsed">
 
-            <DatePicker x:Name="DatePickerControl" 
-                        SelectedDateChanged="FilterChanged"
-                        Width="150"
-                        Margin="0,0,15,0" 
-                        VerticalAlignment="Center" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <!-- TabControl takes all available space -->
+                <RowDefinition Height="Auto" />
+                <!-- Back button row is auto-sized to content -->
+            </Grid.RowDefinitions>
 
-            <RadioButton x:Name="BeforeRadio"
-                         Content="Before"
-                         Checked="FilterChanged"
-                         ToolTip="Show files modified before the selected date"
-                         IsChecked="True"
-                         VerticalAlignment="Center"
-                         Margin="0,0,10,0" />
+            <!-- Main tab control for report sections -->
+            <TabControl Grid.Row="0">
+                <!-- Each TabItem represents a different section of the report, allowing users to easily navigate between summary, folder details, owner details, and errors. -->
+                <TabItem Header="Summary">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Total files" FontSize="14" /> <!-- Display total number of files scanned -->
+                        <TextBlock Text="Access errors" FontSize="14" /> <!-- Display total number of access errors encountered during the scan -->
+                        <TextBlock Text="Duration (sec)" FontSize="14" /> <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
+                        <TextBlock Text="Oldest file" FontSize="14" /> <!-- Display the last modified date of the oldest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                        <TextBlock Text="Newest file" FontSize="14" /> <!-- Display the last modified date of the newest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                    </StackPanel>
+                </TabItem>
 
-            <RadioButton x:Name="AfterRadio"
-                         Content="After"
-                         Checked="FilterChanged"
-                         ToolTip="Show files modified after the selected date"
-                         VerticalAlignment="Center" />
-        </StackPanel>
+                
+                <!-- ======= -->
+                <!-- FOLDERS -->
+                <!-- ======= -->
+                <!-- This tab displays a report of folders scanned, including the number of files in each folder and the oldest and newest file dates. -->
+                <TabItem Header="Folders">
+                    <DataGrid AutoGenerateColumns="False"
+                              IsReadOnly="True">
 
-        </StackPanel>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Folder"
+                                        Width="*" />
 
+                            <DataGridTextColumn Header="Files"
+                                        Width="100" />
 
+                            <DataGridTextColumn Header="Oldest File"
+                                        Width="170" />
 
-        <!-- =================================== -->
-        <!-- Start Scan & Export Results buttons -->
-        <!-- =================================== -->
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="0,5,0,5">
-            
+                            <DataGridTextColumn Header="Newest File"
+                                        Width="170" />
+                        </DataGrid.Columns>
 
-            <Button x:Name="DeleteButton"
-                    Content="Delete All"
-                    Width="120"
-                    Height="30"
-                    Margin="5"
-                    Visibility="Visible"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    FontWeight="Medium" 
-                    Background="#FFFF6767" 
-                    Click="DeleteButton_Click" 
-                    Style="{StaticResource DangerButton}" />
+                    </DataGrid>
+                </TabItem>
 
-            
-            <Button x:Name="StopButton"
-                    Style="{StaticResource SecondaryButton}"
-                    Click="StopButton_Click"
-                    Content="Stop Scan"
-                    HorizontalAlignment="Center"
-                    Width="115"
-                    Height="30"
-                    Margin="5"
-                    Visibility="Hidden"
-                    VerticalAlignment="Center" 
-                    FontWeight="Medium" />
+                <!-- ====== -->
+                <!-- OWNERS -->
+                <!-- ====== -->
+                <!-- This tab displays a report of file owners, including the number of files owned by each owner and the percentage of total files they own. -->
+                <TabItem Header="Owners"> 
+                    <DataGrid AutoGenerateColumns="False"
+                              IsReadOnly="True">
 
-            <Button x:Name="StartButton"
-                    Style="{StaticResource PrimaryButton}"
-                    Content="Start Scan"
-                    Click="StartButton_Click"
-                    Margin="5"
-                    Width="115"
-                    Height="30"
-                    Background="#FF99C2E2" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
-                    FontWeight="Bold" />
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Owner"
+                                        Width="*" />
 
-            <Button x:Name="ExportButton"
-                    Content="Export Results"
-                    Click="ExportButton_Click"
-                    HorizontalAlignment="Center"
-                    Width="115"
-                    Height="30"
-                    Margin="5"
-                    Visibility="Hidden" 
-                    VerticalAlignment="Center"
-                    FontWeight="Medium" 
+                            <DataGridTextColumn Header="Files"
+                                        Width="100" />
+
+                            <DataGridTextColumn Header="Percentage"
+                                        Width="120" />
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </TabItem>
+
+                <!-- ====== -->
+                <!-- Errors -->
+                <!-- ====== -->
+                <!-- This tab displays a report of access errors encountered during the scan, including the file path and the error message. -->
+                <TabItem Header="Errors">  
+                    <DataGrid AutoGenerateColumns="True"
+                              IsReadOnly="True" />
+                </TabItem>
+
+            </TabControl>
+
+            <!-- Back button to return to the scan view -->
+            <Button Grid.Row="1"
+                    Content="Back to Scan"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0"
+                    Width="130"
                     Style="{StaticResource SecondaryButton}" />
-            
-        </StackPanel>
 
-        <ProgressBar x:Name="ScanProgressBar"
-                     Grid.Row="3"
-                     Height="6"
-                     Margin="0,8,0,0"
-                     IsIndeterminate="True"
-                     Visibility="Hidden" />
+        </Grid>  <!-- End of Report View -->
 
-        <!-- ======= -->     
-        <!-- Results -->
-        <!-- ======= -->
-        <DataGrid Grid.Row="4"
-                  x:Name="ResultsDataGrid"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  CanUserAddRows="False">
+    </Grid> <!-- End of Main Grid -->
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="File Path"
-                                    Binding="{Binding FilePath}"
-                                    Width="*" />
-                <DataGridTextColumn Header="Last Modified"
-                                    Binding="{Binding LastModified, StringFormat=dd/MM/yyyy HH:mm}"
-                                    Width="200" />
-                <DataGridTextColumn Header="Owner"
-                                    Binding="{Binding Owner}"
-                                    Width="200" />
-            </DataGrid.Columns>
-        </DataGrid>
-    
-
-    </Grid>
 </Window>

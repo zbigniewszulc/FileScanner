@@ -1,4 +1,5 @@
 ﻿using FileScanner.Models;
+using FileScanner.Reporting;
 using FileScanner.Services;
 using Microsoft.Win32;
 using System.IO;
@@ -137,6 +138,9 @@ namespace FileScanner
                     MessageBoxImage.Information
                 );
 
+                //Show Report button only if we have results
+                ReportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+
                 // Show export button only if we have results
                 ExportButton.Visibility = result.Results.Count > 0 ? Visibility.Visible : Visibility.Hidden;
 
@@ -254,7 +258,9 @@ namespace FileScanner
         {
             _lastScanResult = null;
             ResultsDataGrid.ItemsSource = null;
+            ReportButton.Visibility = Visibility.Hidden;
             ExportButton.Visibility = Visibility.Hidden;
+            DeleteButton.Visibility = Visibility.Hidden;
         }
 
         // Send cancelation signal to the runnng scanning process 
@@ -280,6 +286,14 @@ namespace FileScanner
             StartButton.IsEnabled = true;
             StopButton.Visibility = Visibility.Hidden;
             ScanProgressBar.Visibility = Visibility.Hidden;
+        }
+
+
+        // This method will trigger when user clicks the "Report" button to show detailed report based on last scan results
+        private void ReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScanView.Visibility = Visibility.Collapsed;
+            ReportView.Visibility = Visibility.Visible;
         }
 
         // Handles the click event for "Delete All" button 
