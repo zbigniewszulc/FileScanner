@@ -59,5 +59,26 @@ namespace FileScanner.Services
 
             return folderReport;
         }
+
+        // This method builds a detailed report grouped by file owner, showing file count and percentage of total files for each owner
+        // We use LINQ to group the file results by their owner, then create an OwnerReportItem for each group
+        // The report is ordered by file count in descending order, so owners with the most files appear first
+        public List<OwnerReportItem> BuildOwnerReport()
+        {
+            int totalFiles = _scanResult.Results.Count;
+
+            var ownerReport = _scanResult.Results
+                .GroupBy(r => r.Owner) // Group results by file owner
+                .Select(g => new OwnerReportItem
+                {
+                    Owner = g.Key ?? "Unknown", // Get the owner name (group key), use "Unknown" if null
+                    FileCount = g.Count(), // Count how many files are owned by this owner
+                    Percentage = (double)g.Count() / totalFiles * 100 // Calculate the percentage of total files owned by this owner
+                })
+                .OrderByDescending(i => i.FileCount) // Order the report items by file count, descending
+                .ToList();
+
+            return ownerReport;
+        }
     }
 }
