@@ -429,34 +429,44 @@
                 <!-- Each TabItem represents a different section of the report, allowing users to easily navigate between summary, folder details, owner details, and errors. -->
                 <TabItem Header="Summary">
                     <StackPanel Margin="10">
-                        <TextBlock Text="Total files" FontSize="14" /> <!-- Display total number of files scanned -->
-                        <TextBlock Text="Access errors" FontSize="14" /> <!-- Display total number of access errors encountered during the scan -->
-                        <TextBlock Text="Duration (sec)" FontSize="14" /> <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
-                        <TextBlock Text="Oldest file" FontSize="14" /> <!-- Display the last modified date of the oldest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
-                        <TextBlock Text="Newest file" FontSize="14" /> <!-- Display the last modified date of the newest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                        <!-- Display total number of files scanned -->
+                        <TextBlock Text="{Binding ReportSummary.TotalFiles, StringFormat=Total files: {0}}" FontSize="14" />
+                        <!-- Display total number of access errors encountered during the scan -->
+                        <TextBlock Text="{Binding ReportSummary.TotalErrors, StringFormat=Access errors: {0}}" FontSize="14" />
+                        <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
+                        <TextBlock Text="{Binding ReportSummary.DurationSeconds, StringFormat=Duration (sec): {0:F2}}" FontSize="14" />
+                        <!-- Display the last modified date of the oldest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                        <TextBlock Text="{Binding ReportSummary.OldestFile, StringFormat=Oldest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
+                        <!-- Display the last modified date of the newest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                        <TextBlock Text="{Binding ReportSummary.NewestFile, StringFormat=Newest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
                     </StackPanel>
                 </TabItem>
 
-                
+
                 <!-- ======= -->
                 <!-- FOLDERS -->
                 <!-- ======= -->
                 <!-- This tab displays a report of folders scanned, including the number of files in each folder and the oldest and newest file dates. -->
                 <TabItem Header="Folders">
-                    <DataGrid AutoGenerateColumns="False"
+                    <DataGrid ItemsSource="{Binding FolderReport}"
+                              AutoGenerateColumns="False"
                               IsReadOnly="True">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Folder"
+                                        Binding="{Binding Folder}"
                                         Width="*" />
 
                             <DataGridTextColumn Header="Files"
+                                        Binding="{Binding FileCount}"
                                         Width="100" />
 
                             <DataGridTextColumn Header="Oldest File"
+                                        Binding="{Binding OldestFile, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
                                         Width="170" />
 
                             <DataGridTextColumn Header="Newest File"
+                                        Binding="{Binding NewestFile, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
                                         Width="170" />
                         </DataGrid.Columns>
 
@@ -467,18 +477,21 @@
                 <!-- OWNERS -->
                 <!-- ====== -->
                 <!-- This tab displays a report of file owners, including the number of files owned by each owner and the percentage of total files they own. -->
-                <TabItem Header="Owners"> 
-                    <DataGrid AutoGenerateColumns="False"
+                <TabItem Header="Owners">
+                    <DataGrid ItemsSource="{Binding OwnerReport}"
+                              AutoGenerateColumns="False"
                               IsReadOnly="True">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Owner"
-                                        Width="*" />
-
+                                        Binding="{Binding Owner}"
+                                        Width="*" />  <!-- take all available space for this column -->
                             <DataGridTextColumn Header="Files"
+                                        Binding="{Binding FileCount}"
                                         Width="100" />
-
+                            <!-- Format the Percentage property to show as a percentage with two decimal places (e.g., "25.00%") -->
                             <DataGridTextColumn Header="Percentage"
+                                        Binding="{Binding Percentage, StringFormat={}{0:F2}%}"
                                         Width="120" />
                         </DataGrid.Columns>
 
@@ -489,8 +502,9 @@
                 <!-- Errors -->
                 <!-- ====== -->
                 <!-- This tab displays a report of access errors encountered during the scan, including the file path and the error message. -->
-                <TabItem Header="Errors">  
-                    <DataGrid AutoGenerateColumns="True"
+                <TabItem Header="Errors">
+                    <DataGrid ItemsSource="{Binding ErrorReport}"
+                              AutoGenerateColumns="True"
                               IsReadOnly="True" />
                 </TabItem>
 

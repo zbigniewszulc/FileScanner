@@ -13,6 +13,10 @@ namespace FileScanner
     /// </summary>
     public partial class MainWindow : Window
     {
+        /* ====== */
+        /* FIELDS */
+        /* ====== */
+
         private ScanResult? _lastScanResult;
 
         // This field is required to singal cancellation of ongoing folders/files scan
@@ -21,7 +25,19 @@ namespace FileScanner
         // This variable is needed to make sure that Main Windows definitely was Initialised
         private bool _isLoaded;
 
-        // Helper methods 
+
+        // ===== REPORT PROPERTIES =====
+        // UI has access to properties of this class via DataContext = this;
+        public ReportSummary ReportSummary { get; set; }
+        public List<FolderReportItem> FolderReport { get; set; }
+        public List<OwnerReportItem> OwnerReport { get; set; }
+        public List<ScanError> ErrorReport { get; set; }
+
+
+        /* ============== */
+        /* Helper methods */
+        /* ============== */
+
         // Display messages in form of popup
         private void ShowInfo(string message)
         {
@@ -40,12 +56,18 @@ namespace FileScanner
             MessageBox.Show(message, "File Scanner: Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        // Intialise UI components defined in XAML
+        /* ======================================= */
+        /* Intialise UI components defined in XAML */
+        /* ======================================= */
         public MainWindow()
         {
             InitializeComponent();
             _isLoaded = true;
         }
+
+        /* ======= */
+        /* METHODS */
+        /* ======= */
 
         // Runs when user clicks the "Start Scan" button 
         private async void StartButton_Click(object sender, RoutedEventArgs e)
@@ -87,8 +109,20 @@ namespace FileScanner
             //Check if use selected system proteced files
             bool includeSystemFiles = IncludeSystemFilesCheckBox.IsChecked == true;
 
+            /* ======================== */
+            /* HIDE BUTTONS (if opened) */
+            /* ======================== */
             // Hide Export Button 
             ExportButton.Visibility = Visibility.Hidden;
+
+            // Hide Results Summary Text
+            ResultsSummaryText.Visibility = Visibility.Hidden;
+
+            // Hide 'Scan Report' button
+            ReportButton.Visibility = Visibility.Hidden;
+
+            //Hide 'Delete All' button
+            DeleteButton.Visibility = Visibility.Hidden;
 
             try
             {
@@ -117,6 +151,15 @@ namespace FileScanner
                 );
 
                 _lastScanResult = result;
+
+                // Update Results Summary Text with the number of found files, access errors and execution time
+                ResultsSummaryText.Text =
+                    $"{result.Results.Count} files found  ·  " +
+                    $"{result.Errors.Count} access errors  ·  " +
+                    $"{result.Duration.TotalSeconds:F2} sec";
+
+                // Show Results Summary Text
+                ResultsSummaryText.Visibility = Visibility.Visible;
 
                 // Show the results in the grid
                 ResultsDataGrid.ItemsSource = result.Results;
@@ -258,9 +301,10 @@ namespace FileScanner
         {
             _lastScanResult = null;
             ResultsDataGrid.ItemsSource = null;
+            ResultsSummaryText.Visibility = Visibility.Hidden;
             ReportButton.Visibility = Visibility.Hidden;
             ExportButton.Visibility = Visibility.Hidden;
-            DeleteButton.Visibility = Visibility.Hidden;
+            DeleteButton.Visibility = Visibility.Hidden;            
         }
 
         // Send cancelation signal to the runnng scanning process 
@@ -288,10 +332,22 @@ namespace FileScanner
             ScanProgressBar.Visibility = Visibility.Hidden;
         }
 
-
         // This method will trigger when user clicks the "Report" button to show detailed report based on last scan results
         private void ReportButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_lastScanResult == null)
+                return;
+
+            var builder = new ReportBuilder(_lastScanResult);
+
+            ReportSummary = builder.BuildSummary();
+            FolderReport = builder.BuildFolderReport();
+            OwnerReport = builder.BuildOwnerReport();
+            ErrorReport = _lastScanResult.Errors;
+
+            // Set DataContext to this MainWindow instance so the ReportView can bind to ReportSummary, FolderReport and OwnerReport properties
+            DataContext = this;
+
             ScanView.Visibility = Visibility.Collapsed;
             ReportView.Visibility = Visibility.Visible;
         }
