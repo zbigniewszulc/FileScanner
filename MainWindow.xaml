@@ -10,6 +10,131 @@
         Height="510" 
         Width="900">
 
+    <!-- Define local styles for consistent buttons appearance and behavior across the application -->
+    <!-- Override the default styles and behaviors -->
+    <Window.Resources>
+
+        <!-- PRIMARY BUTTON -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="12,5" />
+            <Setter Property="MinHeight" Value="34" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="#1F3A5F"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#162A44" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#0F1F33" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#B0BEC5" />
+                                <Setter Property="Foreground"
+                                        Value="#ECEFF1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- SECONDARY BUTTON -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#344054" />
+            <Setter Property="BorderBrush" Value="#D0D5DD" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12,5" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="MinHeight" Value="32" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                     Background="#EEF1F5"
+                     BorderBrush="#D0D5DD"
+                     BorderThickness="1"
+                     CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                             Property="Background"
+                             Value="#E2E6EA" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border"
+                             Property="Background"
+                             Value="#DCE1E6" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DANGER BUTTON -->
+        <Style x:Key="DangerButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="12,5" />
+            <Setter Property="MinHeight" Value="32" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                     Background="#B42318"
+                     CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                             Property="Background"
+                             Value="#8F1A14" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border"
+                             Property="Background"
+                             Value="#721611" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />  <!-- Folder row-->
@@ -43,17 +168,18 @@
                      TextChanged="FilterChanged"
                      VerticalAlignment="Center"
                      IsReadOnly="True" 
-                     Height="25"
-                     Background="#FFF1F1F1" 
-                     BorderThickness="1,1,0,1" 
+                     MinHeight="28"
+                     Background="#F2F4F7"
+                     BorderBrush="#B8C1CC" 
                      VerticalContentAlignment="Center" />
 
             <Button Content="Browse..."
                     Grid.Column="2"
                     Width="100"
-                    Height="25"
                     Click="BrowseButton_Click"
-                    Margin="0,0,20,0" />
+                    Margin="0,0,20,0" 
+                    MinHeight="28"
+                    Style="{StaticResource SecondaryButton}" />
 
             <CheckBox x:Name="IncludeHiddenFilesCheckBox"
                       Grid.Column="3"
@@ -150,10 +276,12 @@
                     HorizontalAlignment="Center"
                     FontWeight="Medium" 
                     Background="#FFFF6767" 
-                    Click="DeleteButton_Click" />
+                    Click="DeleteButton_Click" 
+                    Style="{StaticResource DangerButton}" />
 
             
             <Button x:Name="StopButton"
+                    Style="{StaticResource SecondaryButton}"
                     Click="StopButton_Click"
                     Content="Stop Scan"
                     HorizontalAlignment="Center"
@@ -165,6 +293,7 @@
                     FontWeight="Medium" />
 
             <Button x:Name="StartButton"
+                    Style="{StaticResource PrimaryButton}"
                     Content="Start Scan"
                     Click="StartButton_Click"
                     Margin="5"
@@ -173,7 +302,7 @@
                     Background="#FF99C2E2" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
-                    FontWeight="Bold"/>
+                    FontWeight="Bold" />
 
             <Button x:Name="ExportButton"
                     Content="Export Results"
@@ -184,7 +313,9 @@
                     Margin="5"
                     Visibility="Hidden" 
                     VerticalAlignment="Center"
-                    FontWeight="Medium" />
+                    FontWeight="Medium" 
+                    Style="{StaticResource SecondaryButton}" />
+            
         </StackPanel>
 
         <ProgressBar x:Name="ScanProgressBar"
