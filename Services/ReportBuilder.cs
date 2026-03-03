@@ -2,6 +2,7 @@
 using FileScanner.Reporting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace FileScanner.Services
         {
             _scanResult = scanResult;
         }
+
 
         // This method builds a summary report based on the scan results,
         // .. including total files, errors, and file date range
@@ -34,7 +36,28 @@ namespace FileScanner.Services
                 summary.OldestFile = _scanResult.Results.Min(r => r.LastModified); 
                 summary.NewestFile = _scanResult.Results.Max(r => r.LastModified);
             }
+
             return summary;
+        }
+
+        // This method builds a detailed report grouped by folder, showing file count and date range for each folder
+        // We use LINQ to group the file results by their folder path, then create a FolderReportItem for each group
+        // The report is ordered by file count in descending order, so folders with the most files appear first
+        public List<FolderReportItem> BuildFolderReport()
+        {
+            var folderReport = _scanResult.Results
+                .GroupBy(r => Path.GetDirectoryName(r.FilePath)) // Group results by their folder path
+                .Select(g => new FolderReportItem
+                {
+                    Folder = g.Key ?? "Unknown", // Get the folder path (group key), use "Unknown" if null
+                    FileCount = g.Count(), // Count how many files are in this folder
+                    OldestFile = g.Min(r => r.LastModified), // Find the oldest file date in this folder
+                    NewestFile = g.Max(r => r.LastModified) // Find the newest file date in this folder
+                })
+                .OrderByDescending(i => i.FileCount) // Order the report items by file count, descending
+                .ToList();
+
+            return folderReport;
         }
     }
 }
