@@ -352,6 +352,13 @@ namespace FileScanner
             ReportView.Visibility = Visibility.Visible;
         }
 
+        // This method will trigger when user clicks the "Back to Scan" button in the report view to return to main scan view
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReportView.Visibility = Visibility.Collapsed;
+            ScanView.Visibility = Visibility.Visible;
+        }
+
         // Handles the click event for "Delete All" button 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
