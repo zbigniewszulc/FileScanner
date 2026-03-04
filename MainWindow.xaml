@@ -470,9 +470,11 @@
                             <DataGridTextColumn Header="Newest File"
                                         Binding="{Binding NewestFile, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
                                         Width="170" />
-
+                            
+                            <!-- Allows sorting by the actual size in bytes while displaying the human-readable format -->
                             <DataGridTextColumn Header="Total Size"
                                         Binding="{Binding TotalSizeReadableFormat}"
+                                        SortMemberPath="TotalSizeInBytes" 
                                         Width="160" />
                         </DataGrid.Columns>
 
@@ -495,9 +497,12 @@
                             <DataGridTextColumn Header="Files"
                                         Binding="{Binding FileCount}"
                                         Width="100" />
+                            
+                            <!-- Allows sorting by the actual size in bytes while displaying the human-readable format -->
                             <DataGridTextColumn Header="Total Size"
                                         Binding="{Binding TotalSizeReadableFormat}"
-                                        Width="160"/>
+                                        SortMemberPath="TotalSizeInBytes"
+                                        Width="160" />
                             <!-- Format the Percentage property to show as a percentage with two decimal places (e.g., "25.00%") -->
                             <DataGridTextColumn Header="Percentage"
                                         Binding="{Binding Percentage, StringFormat={}{0:F2}%}"
