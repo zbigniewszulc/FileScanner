@@ -4,7 +4,8 @@ using FileScanner.Services;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
-
+using FileScanner.ViewModels;
+using System.Data;
 
 namespace FileScanner
 {
@@ -25,14 +26,8 @@ namespace FileScanner
         // This variable is needed to make sure that Main Windows definitely was Initialised
         private bool _isLoaded;
 
-
-        // ===== REPORT PROPERTIES =====
-        // UI has access to properties of this class via DataContext = this;
-        public ReportSummary ReportSummary { get; set; }
-        public List<FolderReportItem> FolderReport { get; set; }
-        public List<OwnerReportItem> OwnerReport { get; set; }
-        public List<ScanError> ErrorReport { get; set; }
-
+        // This is the ViewModel instance that will hold the data for the report view
+        private readonly MainViewModel _viewModel = new MainViewModel();
 
         /* ============== */
         /* Helper methods */
@@ -62,6 +57,11 @@ namespace FileScanner
         public MainWindow()
         {
             InitializeComponent();
+
+            // Set the DataContext to the ViewModel instance for data binding in the report view
+            DataContext = _viewModel;
+
+            // Set the flag to indicate that the MainWindow has been loaded and is ready for user interaction
             _isLoaded = true;
         }
 
@@ -340,13 +340,10 @@ namespace FileScanner
 
             var builder = new ReportBuilder(_lastScanResult);
 
-            ReportSummary = builder.BuildSummary();
-            FolderReport = builder.BuildFolderReport();
-            OwnerReport = builder.BuildOwnerReport();
-            ErrorReport = _lastScanResult.Errors;
-
-            // Set DataContext to this MainWindow instance so the ReportView can bind to ReportSummary, FolderReport and OwnerReport properties
-            DataContext = this;
+            _viewModel.ReportSummary = builder.BuildSummary();
+            _viewModel.FolderReport = builder.BuildFolderReport();
+            _viewModel.OwnerReport = builder.BuildOwnerReport();
+            _viewModel.ErrorReport = _lastScanResult.Errors;
 
             ScanView.Visibility = Visibility.Collapsed;
             ReportView.Visibility = Visibility.Visible;
