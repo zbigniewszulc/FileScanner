@@ -431,6 +431,8 @@
                     <StackPanel Margin="10">
                         <!-- Display total number of files scanned -->
                         <TextBlock Text="{Binding ReportSummary.TotalFiles, StringFormat=Total files: {0}}" FontSize="14" />
+                        <!-- Display total size of files scanned in bytes -->
+                        <TextBlock Text="{Binding ReportSummary.TotalSizeInBytes, StringFormat=Total size: {0} bytes}" FontSize="14"/> 
                         <!-- Display total number of access errors encountered during the scan -->
                         <TextBlock Text="{Binding ReportSummary.TotalErrors, StringFormat=Access errors: {0}}" FontSize="14" />
                         <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
@@ -468,6 +470,10 @@
                             <DataGridTextColumn Header="Newest File"
                                         Binding="{Binding NewestFile, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
                                         Width="170" />
+
+                            <DataGridTextColumn Header="Total Size (bytes)"
+                                        Binding="{Binding TotalSizeInBytes}"
+                                        Width="160" />
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -489,6 +495,9 @@
                             <DataGridTextColumn Header="Files"
                                         Binding="{Binding FileCount}"
                                         Width="100" />
+                            <DataGridTextColumn Header="Total Size (bytes)"
+                                        Binding="{Binding TotalSizeInBytes}"
+                                        Width="160"/>
                             <!-- Format the Percentage property to show as a percentage with two decimal places (e.g., "25.00%") -->
                             <DataGridTextColumn Header="Percentage"
                                         Binding="{Binding Percentage, StringFormat={}{0:F2}%}"

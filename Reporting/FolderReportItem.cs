@@ -6,5 +6,6 @@
         public int FileCount { get; set; }
         public DateTime OldestFile { get; set; }
         public DateTime NewestFile { get; set; }
+        public long TotalSizeInBytes { get; set; }
     }
 }

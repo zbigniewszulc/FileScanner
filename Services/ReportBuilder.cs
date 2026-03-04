@@ -21,7 +21,8 @@ namespace FileScanner.Services
             {
                 TotalFiles = _scanResult.Results.Count,
                 TotalErrors = _scanResult.Errors.Count,
-                DurationSeconds = _scanResult.Duration.TotalSeconds
+                DurationSeconds = _scanResult.Duration.TotalSeconds,
+                TotalSizeInBytes = _scanResult.Results.Sum(r => r.SizeInBytes) // Calculate total size of all files in bytes
             };
 
             // If there are any files in the results, calculate the oldest and newest file dates
@@ -47,7 +48,8 @@ namespace FileScanner.Services
                     Folder = g.Key ?? "Unknown", // Get the folder path (group key), use "Unknown" if null
                     FileCount = g.Count(), // Count how many files are in this folder
                     OldestFile = g.Min(r => r.LastModified), // Find the oldest file date in this folder
-                    NewestFile = g.Max(r => r.LastModified) // Find the newest file date in this folder
+                    NewestFile = g.Max(r => r.LastModified), // Find the newest file date in this folder
+                    TotalSizeInBytes = g.Sum(r => r.SizeInBytes) // Calculate total size of all files in this folder in bytes
                 })
                 .OrderByDescending(i => i.FileCount) // Order the report items by file count, descending
                 .ToList();
@@ -68,7 +70,8 @@ namespace FileScanner.Services
                 {
                     Owner = g.Key ?? "Unknown", // Get the owner name (group key), use "Unknown" if null
                     FileCount = g.Count(), // Count how many files are owned by this owner
-                    Percentage = (double)g.Count() / totalFiles * 100 // Calculate the percentage of total files owned by this owner
+                    Percentage = (double)g.Count() / totalFiles * 100, // Calculate the percentage of total files owned by this owner
+                    TotalSizeInBytes = g.Sum(r => r.SizeInBytes) // Calculate total size of all files owned by this owner in bytes
                 })
                 .OrderByDescending(i => i.FileCount) // Order the report items by file count, descending
                 .ToList();

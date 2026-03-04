@@ -137,7 +137,8 @@ namespace FileScanner.Services
                     {
                         FilePath = filePath,
                         LastModified = lastWrite,
-                        Owner = owner
+                        Owner = owner,
+                        SizeInBytes = fileInfo.Length
                     });
                 }
                 // Catch any exceptions that occur while processing individual files

@@ -7,5 +7,6 @@
         public DateTime? OldestFile { get; set; }
         public DateTime? NewestFile { get; set; }
         public double DurationSeconds { get; set; }
+        public long TotalSizeInBytes { get; set; }
     }
 }
