@@ -428,20 +428,123 @@
             <TabControl Grid.Row="0">
                 <!-- Each TabItem represents a different section of the report, allowing users to easily navigate between summary, folder details, owner details, and errors. -->
                 <TabItem Header="Summary">
-                    <StackPanel Margin="10">
-                        <!-- Display total number of files scanned -->
-                        <TextBlock Text="{Binding ReportSummary.TotalFiles, StringFormat=Total files: {0}}" FontSize="14" />
-                        <!-- Display total size of files scanned in bytes -->
-                        <TextBlock Text="{Binding ReportSummary.TotalSizeReadableFormat, StringFormat=Total size: {0}}" FontSize="14"/> 
-                        <!-- Display total number of access errors encountered during the scan -->
-                        <TextBlock Text="{Binding ReportSummary.TotalErrors, StringFormat=Access errors: {0}}" FontSize="14" />
-                        <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
-                        <TextBlock Text="{Binding ReportSummary.DurationSeconds, StringFormat=Duration (sec): {0:F2}}" FontSize="14" />
-                        <!-- Display the last modified date of the oldest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
-                        <TextBlock Text="{Binding ReportSummary.OldestFile, StringFormat=Oldest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
-                        <!-- Display the last modified date of the newest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
-                        <TextBlock Text="{Binding ReportSummary.NewestFile, StringFormat=Newest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
-                    </StackPanel>
+
+                    <Grid Margin="10">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- SUMMARY TEXT -->
+                        <StackPanel Grid.Row="0" Margin="20,10,0,5">
+                            <!-- Display total number of files scanned -->
+                            <TextBlock Text="{Binding ReportSummary.TotalFiles, StringFormat=Total files: {0}}" FontSize="14" FontWeight="Bold" />
+                            <!-- Display total size of files scanned in bytes -->
+                            <TextBlock Text="{Binding ReportSummary.TotalSizeReadableFormat, StringFormat=Total size: {0}}" FontSize="14" FontWeight="Bold" />
+                            <!-- Display total number of access errors encountered during the scan -->
+                            <TextBlock Text="{Binding ReportSummary.TotalErrors, StringFormat=Access errors: {0}}" FontSize="14" />
+                            <!-- Display the duration of the scan in seconds, formatted to two decimal places -->
+                            <TextBlock Text="{Binding ReportSummary.DurationSeconds, StringFormat=Duration (sec): {0:F2}}" FontSize="14" />
+                            <!-- Display the last modified date of the oldest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                            <TextBlock Text="{Binding ReportSummary.OldestFile, StringFormat=Oldest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
+                            <!-- Display the last modified date of the newest file found during the scan, formatted as "dd/MM/yyyy HH:mm" -->
+                            <TextBlock Text="{Binding ReportSummary.NewestFile, StringFormat=Newest file: {0:dd/MM/yyyy HH:mm}}" FontSize="14" />
+                        </StackPanel>
+
+                        
+                        <!-- TOP OWNERS -->
+                        <GroupBox Header="Top Owners by Size" Grid.Row="1" Margin="0,20,0,0">
+                        
+                            <!-- Scrollbar -->
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Disabled">
+                                <!-- Display a list of top file owners, showing their name, total size of files they own, and a progress bar representing their size relative to the largest owner -->
+                                <ItemsControl ItemsSource="{Binding TopOwners}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="3">
+                                                <TextBlock Text="{Binding Owner}"
+                                                           FontWeight="SemiBold" />
+                                                
+                                                    <Grid Margin="0,2,0,6">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="120" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                    <!-- The ProgressBar's Value is bound to the TotalSizeInBytes of the owner, and its Maximum is bound to the MaxOwnerSize from the DataContext (which is the size of the largest owner). -->
+                                                    <!-- This allows the bar to visually represent how each owner's total size compares to the largest one. -->
+                                                    <ProgressBar Grid.Column="0"
+                                                                     Value="{Binding TotalSizeInBytes}"
+                                                                     Maximum="{Binding DataContext.MaxOwnerSize, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                     Foreground="#1F3A5F" 
+                                                                     Height="14" />
+
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="{Binding TotalSizeReadableFormat}"
+                                                                   HorizontalAlignment="Right"/>
+                                                    </Grid>
+                                                
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <!-- TOP FOLDERS -->
+                        <GroupBox Header="Top Folders by Size" 
+                                  Grid.Row="2" 
+                                  Margin="0,20,0,0">
+                            
+                            <!-- Scrollbar -->
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Disabled">
+
+                                <!-- Display a list of top folders, showing their name, total size of files they contain, and a progress bar representing their size relative to the largest folder -->
+                                <ItemsControl ItemsSource="{Binding TopFolders}">
+                                    <ItemsControl.ItemTemplate>
+
+
+                                        <DataTemplate>
+                                            <StackPanel Margin="3">
+
+                                                <!-- Folder name -->
+                                                <TextBlock Text="{Binding Folder}"
+                                                           FontWeight="SemiBold"
+                                                           TextTrimming="CharacterEllipsis" />
+
+                                                <!-- bar + total size -->
+                                                <Grid Margin="0,2,0,6">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="120" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- The ProgressBar's Value is bound to the TotalSizeInBytes of the folder, and its Maximum is bound to the MaxFolderSize from the DataContext (which is the size of the largest folder). -->
+                                                    <ProgressBar Grid.Column="0"
+                                                                 Value="{Binding TotalSizeInBytes}"
+                                                                 Maximum="{Binding DataContext.MaxFolderSize, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                 Height="14"
+                                                                 Foreground="#D97706" />
+
+                                                    <TextBlock Grid.Column="1"
+                                                               Text="{Binding TotalSizeReadableFormat}"
+                                                               HorizontalAlignment="Right" />
+                                                </Grid>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                    </Grid>
+
                 </TabItem>
 
 

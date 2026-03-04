@@ -69,5 +69,35 @@ namespace FileScanner.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        // These properties are used to store the maximum sizes for owners and folders
+        // we will use it for display purposes in the UI
+        public long MaxOwnerSize { get; set; }
+        public long MaxFolderSize { get; set; }
+
+        // These properties hold the top owners based on file count or size, which can be used in UI
+        private List<OwnerReportItem> _topOwners;
+        public List<OwnerReportItem> TopOwners
+        {
+            get => _topOwners;
+            set
+            {
+                _topOwners = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // This property holds the top folders based on file count or size, which can be used in UI
+        private List<FolderReportItem> _topFolders;
+        public List<FolderReportItem> TopFolders
+        {
+            get => _topFolders;
+            set
+            {
+                _topFolders = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

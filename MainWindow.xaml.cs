@@ -343,6 +343,28 @@ namespace FileScanner
             _viewModel.OwnerReport = builder.BuildOwnerReport();
             _viewModel.ErrorReport = _lastScanResult.Errors;
 
+            // Get top 10 owners by total size for the report view
+            _viewModel.TopOwners = _viewModel.OwnerReport
+                .OrderByDescending(o => o.TotalSizeInBytes)
+                .Take(10)
+                .ToList();
+
+            // Get top 10 folders by total size for the report view
+            _viewModel.TopFolders = _viewModel.FolderReport
+                .OrderByDescending(f => f.TotalSizeInBytes)
+                .Take(10)
+                .ToList();
+
+            // Calculate max size among top owners to use for graph bar display in the report view
+            _viewModel.MaxOwnerSize = _viewModel.TopOwners.Any()
+                ? _viewModel.TopOwners.Max(o => o.TotalSizeInBytes)
+                : 1;
+
+            // Calculate max size among top folders to use for graph bar display in the report view
+            _viewModel.MaxFolderSize = _viewModel.TopFolders.Any()
+                ? _viewModel.TopFolders.Max(f => f.TotalSizeInBytes)
+                : 1;
+
             ScanView.Visibility = Visibility.Collapsed;
             ReportView.Visibility = Visibility.Visible;
         }
