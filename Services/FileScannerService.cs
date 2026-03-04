@@ -53,7 +53,7 @@ namespace FileScanner.Services
                 Results = results,
                 Errors = errors,
                 Duration = stopwatch.Elapsed
-            }; 
+            };
         }
 
 

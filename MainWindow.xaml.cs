@@ -1,11 +1,9 @@
 ﻿using FileScanner.Models;
-using FileScanner.Reporting;
 using FileScanner.Services;
+using FileScanner.ViewModels;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
-using FileScanner.ViewModels;
-using System.Data;
 
 namespace FileScanner
 {
@@ -304,7 +302,7 @@ namespace FileScanner
             ResultsSummaryText.Visibility = Visibility.Hidden;
             ReportButton.Visibility = Visibility.Hidden;
             ExportButton.Visibility = Visibility.Hidden;
-            DeleteButton.Visibility = Visibility.Hidden;            
+            DeleteButton.Visibility = Visibility.Hidden;
         }
 
         // Send cancelation signal to the runnng scanning process 

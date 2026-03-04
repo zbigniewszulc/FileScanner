@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
-using FileScanner.Models;
+﻿using FileScanner.Models;
 using FileScanner.Reporting;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 // Reference: https://wellsb.com/csharp/learn/wpf-data-binding-csharp-inotifypropertychanged
@@ -24,7 +18,7 @@ namespace FileScanner.ViewModels
                 _reportSummary = value;
 
                 // Notify the UI that the ReportSummary property has changed, so it can update the display
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 
