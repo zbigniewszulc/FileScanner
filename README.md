@@ -286,47 +286,77 @@ Evidence:
 * It proves that stepping outside your usual stack is uncomfortable - but doable
 
 ## References:
-https://www.youtube.com/watch?v=t9ivUosw_iI&list=PLih2KERbY1HHOOJ2C6FOrVXIwg4AZ-hk1
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/get-started/create-app-visual-studio
-https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=net-8.0
-https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable?view=net-8.0
-https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratedirectories?view=net-8.0
-https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratefiles?view=net-8.0
-https://learn.microsoft.com/en-us/dotnet/standard/parallel-programming/task-based-asynchronous-programming
-https://dev.to/stevsharp/taskrun-vs-await-what-every-c-developer-should-know-1mmi
-https://www.syncfusion.com/blogs/post/implementing-cpu-bound-operations-in-an-asp-net-core-application
-https://medium.com/@michaelmaurice410/mastering-cancellationtoken-in-net-8-a-must-have-skill-for-modern-developers-f3594f151054
-https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator
-https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource?view=net-8.0
-https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections
-https://learn.microsoft.com/en-us/dotnet/csharp/linq/standard-query-operators/grouping-data
-https://medium.com/@ravipatel.it/introduction-to-linq-in-c-26bf70607d14
-https://dev.to/rafaeljcamara/c-linq-any-explained-3d58
-https://dev.to/deogadkarravina/wpf-working-with-templates-1jkb
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/
-https://medium.com/@JoshuaTheMiller/styling-wpf-applications-is-easy-0-af853ad07b0d
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview
-https://markheath.net/post/creating-custom-wpf-button-template-in
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-create-apply-style
-https://dev.to/brandonmweaver/wpf-itemscontrol-17bp
-https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.bindingbase.stringformat?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/
-https://elegantcode.com/2009/04/07/wpf-stringformat-in-xaml-with-the-stringformat-attribute/
-https://ukimiawz.github.io/xaml/2012/06/12/xaml-using-string-format/
-https://wpf-tutorial.com/
-https://wpf-tutorial.com/tg/36/data-binding/using-the-datacontext/
-https://www.luxford.com/windows-presentatiion-foundation-wpf
-https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-implement-property-change-notification
-https://blog.postsharp.net/inotifypropertychanged
-https://wellsb.com/csharp/learn/wpf-data-binding-csharp-inotifypropertychanged
-https://www.c-sharpcorner.com/article/explain-inotifypropertychanged-in-wpf-mvvm/
-https://www.c-sharpcorner.com/article/using-bytesize-to-represent-byte-size/
-https://ironpdf.com/blog/net-help/bytesize-csharp-guide/
-https://csharphardcoreprogramming.wordpress.com/2014/04/29/wpf-datagrid-formatting-part-1/
-https://www.syncfusion.com/faq/wpf/databinding/what-is-the-use-of-the-relativesource-property
-https://stackoverflow.com/questions/18717241/binding-property-with-parent-viewmodel
-https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.binding.relativesource?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0
-https://learn.microsoft.com/en-us/archive/msdn-technet-forums/6c933593-373a-4fa1-a50b-2876e132a99c
-https://learn.microsoft.com/en-us/archive/msdn-technet-forums/1ade1ae1-c5b9-4a8a-98ce-7ad50fb15ee5
 
+### 1. WPF Foundations & Environment
+
+Everything you need to get started with the framework and project setup.
+
+* [WPF Desktop Documentation - Home (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/)
+* [Create your first WPF App in Visual Studio (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/get-started/create-app-visual-studio)
+* [WPF-Tutorial.com - Comprehensive Guide](https://wpf-tutorial.com/)
+* [Windows Presentation Foundation (WPF) Overview (Luxford)](https://www.luxford.com/windows-presentatiion-foundation-wpf)
+* [Video: WPF and C# Tutorials Playlist (YouTube)](https://www.youtube.com/watch?v=t9ivUosw_iI&list=PLih2KERbY1HHOOJ2C6FOrVXIwg4AZ-hk1)
+
+### 2. UI: Controls, Styles, and Templates
+
+Building the visual interface and managing the look and feel of your application.
+
+* [WPF Controls Overview (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/)
+* [Styles and Templates Overview (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview)
+* [How to Create and Apply a Style (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-create-apply-style)
+* [Working with Templates in WPF (Dev.to)](https://dev.to/deogadkarravina/wpf-working-with-templates-1jkb)
+* [Styling WPF Applications is Easy (Medium)](https://medium.com/@JoshuaTheMiller/styling-wpf-applications-is-easy-0-af853ad07b0d)
+* [Creating a Custom WPF Button Template (Mark Heath)](https://markheath.net/post/creating-custom-wpf-button-template-in)
+* [Understanding WPF ItemsControl (Dev.to)](https://dev.to/brandonmweaver/wpf-itemscontrol-17bp)
+* [Archive: Troubleshooting Resource Dictionaries (MSDN)](https://learn.microsoft.com/en-us/archive/msdn-technet-forums/1ade1ae1-c5b9-4a8a-98ce-7ad50fb15ee5)
+
+### 3. Data Binding & MVVM
+
+The core of WPF. Connecting your C# logic to your XAML views.
+
+* [WPF Data Binding Documentation (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/)
+* [Using the DataContext in WPF (WPF-Tutorial)](https://wpf-tutorial.com/tg/36/data-binding/using-the-datacontext/)
+* [How to Implement Property Change Notification (MS Docs)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-implement-property-change-notification)
+* [Deep Dive into INotifyPropertyChanged (PostSharp)](https://blog.postsharp.net/inotifypropertychanged)
+* [WPF Data Binding and INotifyPropertyChanged (WellsB)](https://wellsb.com/csharp/learn/wpf-data-binding-csharp-inotifypropertychanged)
+* [Explaining INotifyPropertyChanged in MVVM (C# Corner)](https://www.c-sharpcorner.com/article/explain-inotifypropertychanged-in-wpf-mvvm/)
+* [Binding property with Parent ViewModel (StackOverflow)](https://stackoverflow.com/questions/18717241/binding-property-with-parent-viewmodel)
+* [What is the RelativeSource Property? (Syncfusion)](https://www.syncfusion.com/faq/wpf/databinding/what-is-the-use-of-the-relativesource-property)
+* [RelativeSource Class API (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.binding.relativesource?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0)
+
+
+### 4. Data Formatting in UI
+
+Displaying numbers, sizes, and strings correctly within your views.
+
+* [BindingBase.StringFormat Property (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.bindingbase.stringformat?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0)
+* [WPF StringFormat in XAML with Attributes (ElegantCode)](https://elegantcode.com/2009/04/07/wpf-stringformat-in-xaml-with-the-stringformat-attribute/)
+* [XAML: Using String Format (Github.io)](https://ukimiawz.github.io/xaml/2012/06/12/xaml-using-string-format/)
+* [WPF DataGrid Formatting - Part 1 (Wordpress)](https://csharphardcoreprogramming.wordpress.com/2014/04/29/wpf-datagrid-formatting-part-1/)
+* [Using ByteSize to Represent Byte Sizes (C# Corner)](https://www.c-sharpcorner.com/article/using-bytesize-to-represent-byte-size/)
+* [ByteSize C# Guide (IronPDF)](https://ironpdf.com/blog/net-help/bytesize-csharp-guide/)
+
+### 5. Asynchronous Programming & Performance
+
+Handling long-running tasks without freezing the UI.
+
+* [Task-based Asynchronous Programming (MS Docs)](https://learn.microsoft.com/en-us/dotnet/standard/parallel-programming/task-based-asynchronous-programming)
+* [Task.Run vs Await: What Every Developer Should Know (Dev.to)](https://dev.to/stevsharp/taskrun-vs-await-what-every-c-developer-should-know-1mmi)
+* [Implementing CPU-Bound Operations in .NET (Syncfusion)](https://www.syncfusion.com/blogs/post/implementing-cpu-bound-operations-in-an-asp-net-core-application)
+* [Mastering CancellationToken in .NET 8 (Medium)](https://medium.com/@michaelmaurice410/mastering-cancellationtoken-in-net-8-a-must-have-skill-for-modern-developers-f3594f151054)
+* [CancellationTokenSource Class (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource?view=net-8.0)
+* [Archive: WPF Threading and UI Updates (MSDN)](https://learn.microsoft.com/en-us/archive/msdn-technet-forums/6c933593-373a-4fa1-a50b-2876e132a99c)
+* [Stopwatch Class - Performance Measurement (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=net-8.0)
+
+### 6. C# Logic, Collections, and LINQ
+
+Processing data "under the hood."
+
+* [Built-in Collection Types in C# (MS Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections)
+* [IEnumerable Interface (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable?view=net-8.0)
+* [Introduction to LINQ in C# (Medium)](https://medium.com/@ravipatel.it/introduction-to-linq-in-c-26bf70607d14)
+* [Grouping Data with LINQ (MS Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/linq/standard-query-operators/grouping-data)
+* [C# LINQ Any() Explained (Dev.to)](https://dev.to/rafaeljcamara/c-linq-any-explained-3d58)
+* [Null-coalescing operators ?? and ??= (MS Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator)
+* [EnumerateDirectories Method (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratedirectories?view=net-8.0)
+* [EnumerateFiles Method (MS Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratefiles?view=net-8.0)
