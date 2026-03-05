@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="Assets/Icons/folder-scanner.ico"
         Title="File Scanner" 
-        Height="700" 
+        Height="800" 
         Width="1100"
         Background="#FAFAFA">
 
