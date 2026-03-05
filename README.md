@@ -284,3 +284,49 @@ Evidence:
 * Threading matters more than in web development
 * File system access brings edge cases (hidden files, system files, permissions)
 * It proves that stepping outside your usual stack is uncomfortable - but doable
+
+## References:
+https://www.youtube.com/watch?v=t9ivUosw_iI&list=PLih2KERbY1HHOOJ2C6FOrVXIwg4AZ-hk1
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/get-started/create-app-visual-studio
+https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=net-8.0
+https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable?view=net-8.0
+https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratedirectories?view=net-8.0
+https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.enumeratefiles?view=net-8.0
+https://learn.microsoft.com/en-us/dotnet/standard/parallel-programming/task-based-asynchronous-programming
+https://dev.to/stevsharp/taskrun-vs-await-what-every-c-developer-should-know-1mmi
+https://www.syncfusion.com/blogs/post/implementing-cpu-bound-operations-in-an-asp-net-core-application
+https://medium.com/@michaelmaurice410/mastering-cancellationtoken-in-net-8-a-must-have-skill-for-modern-developers-f3594f151054
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator
+https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource?view=net-8.0
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections
+https://learn.microsoft.com/en-us/dotnet/csharp/linq/standard-query-operators/grouping-data
+https://medium.com/@ravipatel.it/introduction-to-linq-in-c-26bf70607d14
+https://dev.to/rafaeljcamara/c-linq-any-explained-3d58
+https://dev.to/deogadkarravina/wpf-working-with-templates-1jkb
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/
+https://medium.com/@JoshuaTheMiller/styling-wpf-applications-is-easy-0-af853ad07b0d
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/styles-templates-overview
+https://markheath.net/post/creating-custom-wpf-button-template-in
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-create-apply-style
+https://dev.to/brandonmweaver/wpf-itemscontrol-17bp
+https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.bindingbase.stringformat?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/
+https://elegantcode.com/2009/04/07/wpf-stringformat-in-xaml-with-the-stringformat-attribute/
+https://ukimiawz.github.io/xaml/2012/06/12/xaml-using-string-format/
+https://wpf-tutorial.com/
+https://wpf-tutorial.com/tg/36/data-binding/using-the-datacontext/
+https://www.luxford.com/windows-presentatiion-foundation-wpf
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/how-to-implement-property-change-notification
+https://blog.postsharp.net/inotifypropertychanged
+https://wellsb.com/csharp/learn/wpf-data-binding-csharp-inotifypropertychanged
+https://www.c-sharpcorner.com/article/explain-inotifypropertychanged-in-wpf-mvvm/
+https://www.c-sharpcorner.com/article/using-bytesize-to-represent-byte-size/
+https://ironpdf.com/blog/net-help/bytesize-csharp-guide/
+https://csharphardcoreprogramming.wordpress.com/2014/04/29/wpf-datagrid-formatting-part-1/
+https://www.syncfusion.com/faq/wpf/databinding/what-is-the-use-of-the-relativesource-property
+https://stackoverflow.com/questions/18717241/binding-property-with-parent-viewmodel
+https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.binding.relativesource?view=windowsdesktop-10.0&viewFallbackFrom=net-8.0
+https://learn.microsoft.com/en-us/archive/msdn-technet-forums/6c933593-373a-4fa1-a50b-2876e132a99c
+https://learn.microsoft.com/en-us/archive/msdn-technet-forums/1ade1ae1-c5b9-4a8a-98ce-7ad50fb15ee5
+
